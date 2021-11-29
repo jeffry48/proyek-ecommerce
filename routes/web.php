@@ -16,3 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/register', function () {
+    return view('register');
+});
+Route::post('/prosesRegister', "user@register");
+Route::get('/login', function () {
+    return view('login');
+});
+Route::post('/prosesLogin', "user@login");
+Route::get('/listHotel', "hotels@getAllHotels");
+Route::get('/detailHotel{idHotel}', "hotels@getDetailHotel");
+Route::get('/addFavorite', "hotels@addfavorite");
+Route::get('/removeFavorite', "hotels@removeFavorite");
+Route::get('/listFavorite', "user@getAllFavorite");
+
