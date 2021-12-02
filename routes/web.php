@@ -14,10 +14,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('test');
 });
 
+<<<<<<< main
+Route::get('/hotel', "HotelsController@index");
+Route::get('/register', function () {
+    return view('register');
+});
+Route::post('/prosesRegister', "user@register");
+Route::get('/login', function () {
+    return view('login');
+});
+Route::post('/prosesLogin', "user@login");
+Route::get('/listHotel', "hotels@getAllHotels");
+Route::get('/detailHotel{idHotel}', "hotels@getDetailHotel");
+Route::get('/addFavorite', "hotels@addfavorite");
+Route::get('/removeFavorite', "hotels@removeFavorite");
+Route::get('/listFavorite', "user@getAllFavorite");
+
+
+//Admin
+Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
+=======
 //HOTEL--
+/*
 Route::prefix("hotel")->group(function ()
 {
     Route::get('/',"HotelController@viewHome");
@@ -40,4 +61,6 @@ Route::prefix("hotel")->group(function ()
         Route::get('/{id}',"HotelController@viewTambahProduct");
     });
 });
+*/
 //--HOTEL
+>>>>>>> Lidya
