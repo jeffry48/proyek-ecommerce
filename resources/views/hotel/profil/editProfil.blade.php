@@ -1,7 +1,7 @@
 @extends('hotel.mainpage')
 @section('content')
     <h1>EDIT PROFIL</h1>
-    <form action="/hotel/profil/" id="form" method="get">
+    <form action="/userhotel/profil/" id="form" method="get">
     @isset($hotel)
         Nama Hotel
         <br><input type="text" name="namaHotel" value="{{$hotel->nama}}" id=""><br><br>

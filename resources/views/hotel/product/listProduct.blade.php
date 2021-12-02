@@ -1,7 +1,7 @@
 @extends('hotel.mainpage')
 @section('content')
 <h1>LIST PRODUCT</h1>
-<form action="/product" method="get">
+<form action="/userhotel/product" method="get">
     Filter :
     <select name="filter">
         <option value="all">Semua kamar</option>
@@ -40,7 +40,7 @@
                     </td>
                     <td>{{$item->jmlhProduct}}</td>
                     <td>
-                        <form action="/product/{{$product->id}}" method="get">
+                        <form action="/userhotel/product/{{$product->id}}" method="get">
                             <button type="submit">Lihat Detail</button>
                         </form>
                     </td>

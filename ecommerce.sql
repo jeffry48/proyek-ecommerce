@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 09:42 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.9
+-- Waktu pembuatan: 02 Des 2021 pada 17.55
+-- Versi server: 10.4.6-MariaDB
+-- Versi PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -26,97 +27,161 @@ USE `ecommerce`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktur dari tabel `admin`
 --
 
 DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `id_admin` varchar(10) NOT NULL,
   `username_admin` text NOT NULL,
   `password_admin` text NOT NULL,
   `nama_admin` text NOT NULL,
-  `no_telp_admin` int(11) NOT NULL
+  `no_telp_admin` int(11) NOT NULL,
+  PRIMARY KEY (`id_admin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Struktur dari tabel `cart`
 --
 
 DROP TABLE IF EXISTS `cart`;
-CREATE TABLE `cart` (
+CREATE TABLE IF NOT EXISTS `cart` (
   `id_cart` varchar(10) NOT NULL,
   `id_customer` varchar(10) NOT NULL,
-  `id_hotel` varchar(10) NOT NULL
+  `id_hotel` varchar(10) NOT NULL,
+  PRIMARY KEY (`id_cart`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Struktur dari tabel `customer`
 --
 
 DROP TABLE IF EXISTS `customer`;
-CREATE TABLE `customer` (
+CREATE TABLE IF NOT EXISTS `customer` (
   `id_customer` varchar(10) NOT NULL,
   `username_customer` text NOT NULL,
   `password_customer` text NOT NULL,
   `nama_customer` text NOT NULL,
-  `no_telp_customer` int(11) NOT NULL
+  `no_telp_customer` int(11) NOT NULL,
+  PRIMARY KEY (`id_customer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `daerah`
+-- Struktur dari tabel `daerah`
 --
 
 DROP TABLE IF EXISTS `daerah`;
-CREATE TABLE `daerah` (
+CREATE TABLE IF NOT EXISTS `daerah` (
   `id_daerah` varchar(10) NOT NULL,
   `nama_daerah` varchar(100) NOT NULL,
-  `nama_kota` varchar(10) NOT NULL
+  `nama_kota` varchar(10) NOT NULL,
+  PRIMARY KEY (`id_daerah`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dtrans`
+-- Struktur dari tabel `dtrans`
 --
 
 DROP TABLE IF EXISTS `dtrans`;
-CREATE TABLE `dtrans` (
+CREATE TABLE IF NOT EXISTS `dtrans` (
   `id_dtrans` varchar(10) NOT NULL,
   `id_htrans` varchar(10) NOT NULL,
   `id_hotel` varchar(10) NOT NULL,
-  `id_kategori` varchar(10) NOT NULL
+  `id_kategori` varchar(10) NOT NULL,
+  `jumlah_kamar` int(11) NOT NULL,
+  `lama_menginap` int(11) NOT NULL COMMENT 'per hari',
+  `harga_kamar` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL,
+  PRIMARY KEY (`id_dtrans`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `failed_jobs`
 --
 
 DROP TABLE IF EXISTS `failed_jobs`;
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hotel`
+-- Struktur dari tabel `fasilitas_hotel`
+--
+
+DROP TABLE IF EXISTS `fasilitas_hotel`;
+CREATE TABLE IF NOT EXISTS `fasilitas_hotel` (
+  `id` varchar(8) NOT NULL,
+  `nama` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `fasilitas_kamar`
+--
+
+DROP TABLE IF EXISTS `fasilitas_kamar`;
+CREATE TABLE IF NOT EXISTS `fasilitas_kamar` (
+  `id` varchar(8) NOT NULL,
+  `nama` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `fas_utk_hotel`
+--
+
+DROP TABLE IF EXISTS `fas_utk_hotel`;
+CREATE TABLE IF NOT EXISTS `fas_utk_hotel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_hotel` varchar(10) NOT NULL,
+  `id_fas_hotel` varchar(8) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `fas_utk_kamar`
+--
+
+DROP TABLE IF EXISTS `fas_utk_kamar`;
+CREATE TABLE IF NOT EXISTS `fas_utk_kamar` (
+  `id` int(11) NOT NULL,
+  `id_kamar` varchar(10) NOT NULL,
+  `id_fas_kamar` varchar(8) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `hotel`
 --
 
 DROP TABLE IF EXISTS `hotel`;
-CREATE TABLE `hotel` (
+CREATE TABLE IF NOT EXISTS `hotel` (
   `id_hotel` varchar(10) NOT NULL,
   `id_pemilik` varchar(10) NOT NULL,
   `nama_hotel` text NOT NULL,
@@ -125,11 +190,12 @@ CREATE TABLE `hotel` (
   `Kota` varchar(10) NOT NULL,
   `no_telp_hotel` varchar(11) NOT NULL,
   `gambar_hotel` varchar(50) NOT NULL,
-  `detail_hotel` text NOT NULL
+  `detail_hotel` text NOT NULL,
+  PRIMARY KEY (`id_hotel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `hotel`
+-- Dumping data untuk tabel `hotel`
 --
 
 INSERT INTO `hotel` (`id_hotel`, `id_pemilik`, `nama_hotel`, `alamat_hotel`, `Daerah`, `Kota`, `no_telp_hotel`, `gambar_hotel`, `detail_hotel`) VALUES
@@ -139,60 +205,65 @@ INSERT INTO `hotel` (`id_hotel`, `id_pemilik`, `nama_hotel`, `alamat_hotel`, `Da
 -- --------------------------------------------------------
 
 --
--- Table structure for table `htrans`
+-- Struktur dari tabel `htrans`
 --
 
 DROP TABLE IF EXISTS `htrans`;
-CREATE TABLE `htrans` (
+CREATE TABLE IF NOT EXISTS `htrans` (
   `id_htrans` varchar(10) NOT NULL,
   `id_customer` varchar(10) NOT NULL,
-  `tgl_transaksi` date NOT NULL
+  `tgl_transaksi` date NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  PRIMARY KEY (`id_htrans`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kategori_hotel`
+-- Struktur dari tabel `kategori_hotel`
 --
 
 DROP TABLE IF EXISTS `kategori_hotel`;
-CREATE TABLE `kategori_hotel` (
+CREATE TABLE IF NOT EXISTS `kategori_hotel` (
   `id_kategori` varchar(10) NOT NULL,
   `id_hotel` varchar(10) NOT NULL,
   `jumlah_kamar` int(11) NOT NULL,
   `harga_kamar` int(11) NOT NULL,
   `available` int(11) NOT NULL,
   `gambar_kamar` varchar(50) NOT NULL,
-  `detail_kamar` text NOT NULL
+  `detail_kamar` text NOT NULL,
+  PRIMARY KEY (`id_kategori`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kota`
+-- Struktur dari tabel `kota`
 --
 
 DROP TABLE IF EXISTS `kota`;
-CREATE TABLE `kota` (
+CREATE TABLE IF NOT EXISTS `kota` (
   `id_kota` varchar(10) NOT NULL,
-  `nama_kota` varchar(100) NOT NULL
+  `nama_kota` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_kota`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -204,179 +275,67 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `password_resets`
 --
 
 DROP TABLE IF EXISTS `password_resets`;
-CREATE TABLE `password_resets` (
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pemilik_hotel`
+-- Struktur dari tabel `pemilik_hotel`
 --
 
 DROP TABLE IF EXISTS `pemilik_hotel`;
-CREATE TABLE `pemilik_hotel` (
+CREATE TABLE IF NOT EXISTS `pemilik_hotel` (
   `id_pemilik` varchar(10) NOT NULL,
   `username_pemilik` text NOT NULL,
   `password_pemilik` text NOT NULL,
   `nama_pemilik` text NOT NULL,
-  `no_telp_pemilik` int(11) NOT NULL
+  `no_telp_pemilik` int(11) NOT NULL,
+  PRIMARY KEY (`id_pemilik`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promo`
+-- Struktur dari tabel `promo`
 --
 
 DROP TABLE IF EXISTS `promo`;
-CREATE TABLE `promo` (
+CREATE TABLE IF NOT EXISTS `promo` (
   `id_promo` varchar(10) NOT NULL,
   `id_pemilik` varchar(10) NOT NULL,
   `judul_promo` text NOT NULL,
-  `isi_promo` text NOT NULL
+  `isi_promo` text NOT NULL,
+  PRIMARY KEY (`id_promo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
-
---
--- Indexes for table `cart`
---
-ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id_cart`);
-
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id_customer`);
-
---
--- Indexes for table `daerah`
---
-ALTER TABLE `daerah`
-  ADD PRIMARY KEY (`id_daerah`);
-
---
--- Indexes for table `dtrans`
---
-ALTER TABLE `dtrans`
-  ADD PRIMARY KEY (`id_dtrans`);
-
---
--- Indexes for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `hotel`
---
-ALTER TABLE `hotel`
-  ADD PRIMARY KEY (`id_hotel`);
-
---
--- Indexes for table `htrans`
---
-ALTER TABLE `htrans`
-  ADD PRIMARY KEY (`id_htrans`);
-
---
--- Indexes for table `kategori_hotel`
---
-ALTER TABLE `kategori_hotel`
-  ADD PRIMARY KEY (`id_kategori`);
-
---
--- Indexes for table `kota`
---
-ALTER TABLE `kota`
-  ADD PRIMARY KEY (`id_kota`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indexes for table `pemilik_hotel`
---
-ALTER TABLE `pemilik_hotel`
-  ADD PRIMARY KEY (`id_pemilik`);
-
---
--- Indexes for table `promo`
---
-ALTER TABLE `promo`
-  ADD PRIMARY KEY (`id_promo`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
