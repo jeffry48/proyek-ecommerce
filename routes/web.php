@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('test');
 });
+
+Route::get('/hotel', "HotelsController@index");
 Route::get('/register', function () {
     return view('register');
 });
