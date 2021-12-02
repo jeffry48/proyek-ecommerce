@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('test');
 });
 
+<<<<<<< main
 Route::get('/hotel', "HotelsController@index");
 Route::get('/register', function () {
     return view('register');
@@ -35,3 +36,31 @@ Route::get('/listFavorite', "user@getAllFavorite");
 
 //Admin
 Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
+=======
+//HOTEL--
+/*
+Route::prefix("hotel")->group(function ()
+{
+    Route::get('/',"HotelController@viewHome");
+    Route::prefix("transaksi")->group(function (){
+        Route::get('/',"HotelController@viewListTransaksi");
+        Route::get('/{id}',"HotelController@viewDetailTransaksi");
+    });
+    Route::prefix("promo")->group(function (){
+        Route::get('/',"HotelController@viewListPromo");
+        Route::get('/{id}',"HotelController@viewDetailPromo");
+        Route::get('/tambah',"HotelController@viewTambahPromo");
+    });
+    Route::prefix("profil")->group(function (){
+        Route::get('/',"HotelController@viewProfil");
+        Route::get('/edit',"HotelController@viewEditProfil");
+    });
+    Route::prefix("product")->group(function (){
+        Route::get('/',"HotelController@viewListProduct");
+        Route::get('/tambah',"HotelController@viewTambahProduct");
+        Route::get('/{id}',"HotelController@viewTambahProduct");
+    });
+});
+*/
+//--HOTEL
+>>>>>>> Lidya
