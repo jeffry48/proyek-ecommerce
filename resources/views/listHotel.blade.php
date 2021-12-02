@@ -76,7 +76,9 @@
                                             use Illuminate\Support\Facades\DB;
                                             $checkFav=DB::select('select * from customer where id_customer="'.session()->get('loggedIn').'"');
                                         ?>
-                                        Welcome, {{$checkFav[0]->nama_customer}}
+                                        @isset($checkFav[0]->nama_customer)
+                                            Welcome, {{$checkFav[0]->nama_customer}}
+                                        @endisset
                                     </h4>
                                 </div>
                                 <h1>List Hotel</h1>
