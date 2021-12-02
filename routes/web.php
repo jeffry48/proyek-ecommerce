@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('test');
 });
 Route::get('/register', function () {
     return view('register');
@@ -30,3 +30,6 @@ Route::get('/addFavorite', "hotels@addfavorite");
 Route::get('/removeFavorite', "hotels@removeFavorite");
 Route::get('/listFavorite', "user@getAllFavorite");
 
+
+//Admin
+Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
