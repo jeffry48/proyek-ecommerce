@@ -9,7 +9,7 @@ class Hotel extends Model
     //
     protected $table = "hotel";
     protected $primaryKey = "id_hotel";
-    protected $incrementing = false;
-    protected $timestamps = false;
+    public $incrementing = false;
+    public $timestamps = false;
     public $guarded = [];
 }

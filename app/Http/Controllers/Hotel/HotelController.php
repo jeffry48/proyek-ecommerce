@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hotel;
 
+use App\Hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,12 @@ class HotelController extends Controller
     //HOME--
     public function viewHome()
     {
-        return view("hotel.home");
+        $nama_hotel = "";
+        $admin_hotel = "";
+        return view("hotel.home",[
+            "nama_hotel" => $nama_hotel,
+            "adminhotel" => $admin_hotel
+        ]);
     }
     //--HOME
 
@@ -64,11 +70,25 @@ class HotelController extends Controller
     //PROFIL--
     public function viewProfil()
     {
-        return view("hotel.profil.profil");
+        $id_hotel = "HO00000001";
+        $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
+        $fasilitas = null;
+        return view("hotel.profil.profil",[
+            "mode_edit"=>false,
+            "hotel"=>$hotel->first(),
+            "fasilitas"=>$fasilitas
+        ]);
     }
     public function viewEditProfil()
     {
-        return view("hotel.profil.editProfil");
+        $id_hotel = "HO00000001";
+        $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
+        $fasilitas = null;
+        return view("hotel.profil.editProfil",[
+            "mode_edit"=>true,
+            "hotel"=>$hotel->first(),
+            "fasilitas"=>$fasilitas
+        ]);
     }
     //--PROFIL
 }
