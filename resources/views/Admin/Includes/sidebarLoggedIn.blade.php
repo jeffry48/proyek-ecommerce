@@ -23,15 +23,27 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="listFavorite" class="nav-link">
+                                        <a href="listCust" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>List Favorite</p>
+                                            <p>List Customer</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="listPem" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List Pemilik</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="listBanHotel" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List Banned Hotel</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>History dan detail pemesanan</p>
+                                            <p>List Banned Users</p>
                                         </a>
                                     </li>
                                 </ul>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>list hotel</title>
+        <title>detail hotel</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -16,36 +16,13 @@
 
     </head>
     <style>
-        .pic{
-            /* background-color: blue; */
-        }
-        .card:hover{
-            background-color: wheat;
-            cursor: pointer;
-        }
+
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header')
             </nav>
             <!-- /.navbar -->
 
@@ -55,7 +32,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn');
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -67,56 +44,47 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <h4>
-                                        Favorite Page
-                                    </h4>
-                                </div>
-                                <h1>List Hotel</h1>
+                                <h1>{{$currHotel[0]->nama_hotel}}</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
                 </section>
-                <?php
 
-                ?>
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
-                        @if (isset($hotels))
-                            @for ($i = 0; $i < (count($hotels)/3); $i++)
-                            <div class="row">
-                                @for ($j = 0; $j < 3; $j++)
-                                    @if (isset($hotels[$j+(3*$i)]))
-                                        <div class="col-md-4">
-                                            <div class="card" id="{{$hotels[$j+(3*$i)]->id_hotel}}">
-                                                <div class="card-header">
-                                                    {{$hotels[$j+(3*$i)]->nama_hotel}}
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="pic">
-                                                        <img src="" alt="">
-                                                    </div>
-                                                    <div class="detailHotel">
-                                                        @for ($k = 0; $k < count($pemiliks); $k++)
-                                                            @if ($pemiliks[$k]->id_pemilik==$hotels[$j+(3*$i)]->id_pemilik)
-                                                                <?php $currPem=$pemiliks[$k];?>
-                                                            @endif
-                                                        @endfor
-                                                        by: {{$currPem->nama_pemilik}}
-                                                        <br>
-                                                        {{$hotels[$j+(3*$i)]->alamat_hotel}}
-                                                        <br>
-                                                        no telp: {{$hotels[$j+(3*$i)]->no_telp_hotel}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endfor
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    @for ($k = 0; $k < count($pemiliks); $k++)
+                                        @if ($pemiliks[$k]->id_pemilik==$currHotel[0]->id_pemilik)
+                                            <?php $currPem=$pemiliks[$k];?>
+                                        @endif
+                                    @endfor
+                                    <div class="card-body">
+                                        <h4><a href="detailPem{{$currPem->id_pemilik}}">by: {{$currPem->nama_pemilik}}</a></h4>
+                                    </div>
+                                    <div class="card-body">
+                                        alamat: {{$currHotel[0]->alamat_hotel}}
+                                    </div>
+                                    <div class="card-body">
+                                        telp: {{$currHotel[0]->no_telp_hotel}}
+                                    </div>
+                                    <div class="card-body">
+                                        jumlah kamar: {{$currHotel[0]->jumlah_kamar}}
+                                    </div>
+                                    <div class="card-body">
+                                        harga kamar: {{$currHotel[0]->no_telp_hotel}}
+                                    </div>
+                                    <div class="card-body">
+                                        detail: {{$currHotel[0]->detail_hotel}}
+                                    </div>
+                                </div>
                             </div>
-                            @endfor
-                        @endif
+                            <div class="col-md-3">
+                                <button class="btn" style="background-color: red; color: white; border: solid white 1px">Ban</button>
+                            </div>
+                        </div>
                         <!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </section>
@@ -155,8 +123,8 @@
             $(function () {
                 bsCustomFileInput.init();
             });
-            $('.card').click(function() {
-                window.location.href="detailHotel"+$(this).attr('id');
+            $('.pesanBtn').click(function() {
+                window.location.href="pemesanan"+$(this).attr('');
             });
         </script>
     </body>

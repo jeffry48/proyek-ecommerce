@@ -31,24 +31,7 @@
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header');
             </nav>
             <!-- /.navbar -->
 
@@ -58,7 +41,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn');
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -74,10 +57,10 @@
                                     <h4>
                                         <?php
                                             use Illuminate\Support\Facades\DB;
-                                            $checkFav=DB::select('select * from customer where id_customer="'.session()->get('loggedIn').'"');
+                                            $checkUser=DB::select('select * from admin where id_admin="'.session()->get('loggedIn').'"');
                                         ?>
-                                        @isset($checkFav[0]->nama_customer)
-                                            Welcome, {{$checkFav[0]->nama_customer}}
+                                        @isset($checkUser[0]->nama_admin)
+                                            Welcome, {{$checkUser[0]->nama_admin}}
                                         @endisset
                                     </h4>
                                 </div>

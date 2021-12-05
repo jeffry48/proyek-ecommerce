@@ -13,28 +13,47 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('test');
-});
+// Route::get('/', function () {
+//     return view('test');
+// });
 
-Route::get('/hotel', "HotelsController@index");
-Route::get('/register', function () {
-    return view('register');
-});
-Route::post('/prosesRegister', "user@register");
-Route::get('/login', function () {
-    return view('login');
-});
-Route::post('/prosesLogin', "user@login");
-Route::get('/listHotel', "hotels@getAllHotels");
-Route::get('/detailHotel{idHotel}', "hotels@getDetailHotel");
-Route::get('/addFavorite', "hotels@addfavorite");
-Route::get('/removeFavorite', "hotels@removeFavorite");
-Route::get('/listFavorite', "user@getAllFavorite");
-
+// Route::get('/hotel', "HotelsController@index");
+// Route::get('/register', function () {
+//     return view('register');
+// });
+// Route::post('/prosesRegister', "user@register");
+// Route::get('/login', function () {
+//     return view('login');
+// });
+// Route::post('/prosesLogin', "user@login");
+// Route::get('/listHotel', "hotels@getAllHotels");
+// Route::get('/detailHotel{idHotel}', "hotels@getDetailHotel");
+// Route::get('/addFavorite', "hotels@addfavorite");
+// Route::get('/removeFavorite', "hotels@removeFavorite");
+// Route::get('/listFavorite', "user@getAllFavorite");
 
 //Admin
-Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
+// Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
+Route::prefix("admin")->group(function ()
+{
+    Route::get('/register', function () {
+        return view('Admin.register');
+    });
+    Route::post('/prosesRegister', "AdminController@register");
+    Route::get('/login', function () {
+        return view('Admin.login');
+    });
+    Route::post('/prosesLogin', "AdminController@login");
+    Route::get('/listHotel', "AdminController@getAllHotels");
+    Route::get('/listPem', "AdminController@getAllPem");
+    Route::get('/listCust', "AdminController@getAllCust");
+
+    Route::get('/detailHotel{idHotel}', "AdminController@getDetailHotel");
+    Route::get('/detailPem{idPem}', "AdminController@getDetailpem");
+
+
+});
+
 
 //HOTEL--
 Route::prefix("userhotel")->group(function ()

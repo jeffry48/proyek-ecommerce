@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>register</title>
+        <title>list hotel</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -16,35 +16,22 @@
 
     </head>
     <style>
-
+        .pic{
+            /* background-color: blue; */
+        }
+        .card:hover{
+            background-color: wheat;
+            cursor: pointer;
+        }
+        .row{
+            margin-top: 1%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                    </li>
-                </ul>
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            {{-- <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a> --}}
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header');
             </nav>
             <!-- /.navbar -->
 
@@ -54,7 +41,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarNotLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn');
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -66,55 +53,60 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Register</h1>
+                                <h1>List Customer</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
                 </section>
+                <?php
 
+                ?>
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card">
-                                <form action="prosesRegister" method="post">
-                                    <div class="card-body">
-                                        @csrf
-                                        <div class="form-group">
-                                            @if (session()->get('message')!=null)
-                                                <div style="color: green">
-                                                    {{session()->get('message')}}
-                                                    {{session()->forget('message')}}
-                                                </div>
-                                            @endif
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Search
+                        </button>
+                        <!-- buat search -->
+                        <div class="collapse" id="collapseExample">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form action="">
+                                        <div class="box">
+                                            search:
+                                            <input type="text" name="" id="" class="form-control" placeholder="search">
                                         </div>
-                                        <div class="form-group">
-                                            Username:
-                                            <input type="text" name="username" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            Password:
-                                            <input type="password" name="password" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            nama lengkap:
-                                            <input type="text" name="nama" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            no telp:
-                                            <input type="text" name="noTelp" id="" class="form-control">
-                                        </div>
-                                        <input type="radio" name="jenisUser" id="" value="customer" checked="true">customer
-                                        <input type="radio" name="jenisUser" id="" value="pemilik">pemilik
-                                    </div>
-                                    <div class="card-footer">
-                                        <button class="btn btn-primary">Register</button>
-                                    </div>
-                                </form>
+                                    </form>
                                 </div>
                             </div>
                         </div>
+
+                        @if (isset($customers))
+                            @for ($i = 0; $i < (count($customers)/3); $i++)
+                            <div class="row">
+                                @for ($j = 0; $j < 3; $j++)
+                                    @if (isset($customers[$j+(3*$i)]))
+                                        <div class="col-md-4">
+                                            <div class="card" id="{{$customers[$j+(3*$i)]->id_customer}}">
+                                                <div class="card-header">
+                                                    {{$customers[$j+(3*$i)]->nama_customer}}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="detailHotel">
+                                                        id: {{$customers[$j+(3*$i)]->id_customer}}
+                                                        <br>
+                                                        username: {{$customers[$j+(3*$i)]->username_customer}}
+                                                        <br>
+                                                        no telp: {{$customers[$j+(3*$i)]->no_telp_customer}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endfor
+                            </div>
+                            @endfor
+                        @endif
                         <!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </section>
@@ -152,6 +144,9 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
+            });
+            $('.card').click(function() {
+                window.location.href="detailCust"+$(this).attr('id');
             });
         </script>
     </body>
