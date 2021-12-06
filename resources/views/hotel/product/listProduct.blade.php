@@ -8,46 +8,27 @@
         <option value="promo">Kamar yang promo</option>
         <option value="available">Kamar yang tersedia</option>
         <option value="unavailable">Kamar yang tidak tersedia</option>
-    </ul>
+    </select>
 </form>
 
 @isset($products)
-<table>
+<table border="1px solid black">
     <tr>
-        <th>Tipe Kamar</th>
-        <th>Tipe Ranjang</th>
-        <th>Kapasitas Orang</th>
+        <th>Nama Kamar</th>
         <th>Harga</th>
-        <th>Fasilitas Tambahan</th>
         <th>Jumlah kamar</th>
-        <th>Detail kamar</th>
+        <th>Detail</th>
     </tr>
     @foreach ($products as $product)
         <tr>
-            <td>{{$product->nama}} </td>
-            <td>{{$product->ranjang}}</td>
-        @if (count($product->jenisProduct)>0){
-            @foreach ($product->jenisProduct as $item)
-                <tr>
-                    <td>{{$item->jmlhOrang}}</td>
-                    <td>{{$item->harga}}</td>
-                    <td>
-                        <ul>
-                        @foreach ($item->tambahan as $tambahan)
-                                <li><b>{{$tambahan->nama}}</b><br>{{$tambahan->deskripsi}}</li>
-                        @endforeach
-                        </ul>
-                    </td>
-                    <td>{{$item->jmlhProduct}}</td>
-                    <td>
-                        <form action="/userhotel/product/{{$product->id}}" method="get">
-                            <button type="submit">Lihat Detail</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        }
-        @endif
+            <td>{{$product->nama_kamar}} </td>
+            <td>{{$product->harga_kamar}}</td>
+            <td>{{$product->jumlah_kamar}}</td>
+            <td>
+                <form action="/userhotel/product/{{$product->id_kategori}}" method="get">
+                    <button name="btnDetail">Detail</button>
+                </form>
+            </td>
         </tr>
     @endforeach
 </table>

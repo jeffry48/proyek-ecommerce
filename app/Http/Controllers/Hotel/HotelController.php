@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hotel;
 
 use App\Hotel;
 use App\Http\Controllers\Controller;
+use App\KategoriHotel;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -26,7 +27,11 @@ class HotelController extends Controller
     //PRODUCT--
     public function viewListProduct()
     {
-        return view("hotel.product.listProduct");
+        $id_hotel = "HO00000001";
+        $tipe_kamar = KategoriHotel::select("*")->where("id_hotel", $id_hotel);
+        return view("hotel.product.listProduct",[
+            "products"=>$tipe_kamar->get()
+        ]);
     }
     public function viewTambahProduct()
     {
@@ -34,7 +39,28 @@ class HotelController extends Controller
     }
     public function viewDetailProduct($id,Request $request)
     {
-        return view("hotel.product.detailProduct");
+        $tipe_kamar = KategoriHotel::select("*")->where("id_kategori",$id);
+        return view("hotel.product.detailProduct",[
+            "mode_edit"=>false,
+            "kamar"=>$tipe_kamar->first()
+        ]);
+    }
+    public function viewEditProduct($id,Request $request)
+    {
+        $tipe_kamar = KategoriHotel::select("*")->where("id_kategori",$id);
+        return view("hotel.product.editProduct",[
+            "mode_edit"=>true,
+            "kamar"=>$tipe_kamar->first()
+        ]);
+    }
+    public function simpanEditProduct(Request $request)
+    {
+        $id_kategori = $request->btnSimpan;
+        return redirect('/userhotel/product/'.$id_kategori);
+    }
+    public function viewTambahJmlhProduct($id,Request $request)
+    {
+        return back();
     }
     //--PRODUCT
 
@@ -89,6 +115,10 @@ class HotelController extends Controller
             "hotel"=>$hotel->first(),
             "fasilitas"=>$fasilitas
         ]);
+    }
+    public function simpanEditProfil(Request $request)
+    {
+        return redirect('/userhotel/profil');
     }
     //--PROFIL
 }

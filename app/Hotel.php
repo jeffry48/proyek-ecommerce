@@ -12,4 +12,9 @@ class Hotel extends Model
     public $incrementing = false;
     public $timestamps = false;
     public $guarded = [];
+
+    public function tipe_kamar()
+    {
+        return $this->belongsTo(KategoriHotel::class,"id_kategori","id_kategori");
+    }
 }
