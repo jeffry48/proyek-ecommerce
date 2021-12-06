@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 09:42 AM
+-- Generation Time: Dec 06, 2021 at 03:54 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -48,8 +48,19 @@ DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id_cart` varchar(10) NOT NULL,
   `id_customer` varchar(10) NOT NULL,
-  `id_hotel` varchar(10) NOT NULL
+  `id_kamar` varchar(10) NOT NULL,
+  `jumlah_kamar_pesan` int(11) NOT NULL,
+  `tgl_checkin` date NOT NULL,
+  `tgl_checkout` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id_cart`, `id_customer`, `id_kamar`, `jumlah_kamar_pesan`, `tgl_checkin`, `tgl_checkout`) VALUES
+('CA00000002', 'guest001', 'KA00000001', 5, '2021-12-16', '2021-12-18'),
+('CA00000003', 'guest001', 'KA00000002', 2, '2021-12-08', '2021-12-10');
 
 -- --------------------------------------------------------
 
@@ -90,7 +101,12 @@ CREATE TABLE `dtrans` (
   `id_dtrans` varchar(10) NOT NULL,
   `id_htrans` varchar(10) NOT NULL,
   `id_hotel` varchar(10) NOT NULL,
-  `id_kategori` varchar(10) NOT NULL
+  `id_kategori` varchar(10) NOT NULL,
+  `jumlah_kamar` int(11) NOT NULL,
+  `tgl_checkin` date NOT NULL COMMENT 'per hari',
+  `tgl_checkout` date NOT NULL,
+  `harga_kamar` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -112,6 +128,56 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fasilitas_hotel`
+--
+
+DROP TABLE IF EXISTS `fasilitas_hotel`;
+CREATE TABLE `fasilitas_hotel` (
+  `id` varchar(8) NOT NULL,
+  `nama` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fasilitas_kamar`
+--
+
+DROP TABLE IF EXISTS `fasilitas_kamar`;
+CREATE TABLE `fasilitas_kamar` (
+  `id` varchar(8) NOT NULL,
+  `nama` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fas_utk_hotel`
+--
+
+DROP TABLE IF EXISTS `fas_utk_hotel`;
+CREATE TABLE `fas_utk_hotel` (
+  `id` int(11) NOT NULL,
+  `id_hotel` varchar(10) NOT NULL,
+  `id_fas_hotel` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fas_utk_kamar`
+--
+
+DROP TABLE IF EXISTS `fas_utk_kamar`;
+CREATE TABLE `fas_utk_kamar` (
+  `id` int(11) NOT NULL,
+  `id_kamar` varchar(10) NOT NULL,
+  `id_fas_kamar` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotel`
 --
 
@@ -120,6 +186,7 @@ CREATE TABLE `hotel` (
   `id_hotel` varchar(10) NOT NULL,
   `id_pemilik` varchar(10) NOT NULL,
   `nama_hotel` text NOT NULL,
+  `bintang` int(11) NOT NULL,
   `alamat_hotel` text NOT NULL,
   `Daerah` varchar(10) NOT NULL,
   `Kota` varchar(10) NOT NULL,
@@ -132,9 +199,9 @@ CREATE TABLE `hotel` (
 -- Dumping data for table `hotel`
 --
 
-INSERT INTO `hotel` (`id_hotel`, `id_pemilik`, `nama_hotel`, `alamat_hotel`, `Daerah`, `Kota`, `no_telp_hotel`, `gambar_hotel`, `detail_hotel`) VALUES
-('HO00000001', 'PE00000001', 'POP HOTEL MANYAR', 'Manyar  Kertoarjo 8', 'DA00000001', 'KO00000001', '0812340098', 'pop.jpg', 'HOTEL DIBANGUN OLEH BAPAK POP'),
-('HO00000002', 'PE00000001', 'POP HOTEL NGAGEL', 'NGAGEL JAYA 3', 'DA00000002', 'KO00000001', '0812340098', 'pop.jpg', 'HOTEL DIBANGUN OLEH BAPAK POP');
+INSERT INTO `hotel` (`id_hotel`, `id_pemilik`, `nama_hotel`, `bintang`, `alamat_hotel`, `Daerah`, `Kota`, `no_telp_hotel`, `gambar_hotel`, `detail_hotel`) VALUES
+('HO00000001', 'PE00000001', 'POP HOTEL MANYAR', 2, 'Manyar  Kertoarjo 8', 'DA00000001', 'KO00000001', '0812340098', 'pop.jpg', 'HOTEL DIBANGUN OLEH BAPAK POP'),
+('HO00000002', 'PE00000001', 'POP HOTEL NGAGEL', 2, 'NGAGEL JAYA 3', 'DA00000002', 'KO00000001', '0812340098', 'pop.jpg', 'HOTEL DIBANGUN OLEH BAPAK POP');
 
 -- --------------------------------------------------------
 
@@ -146,7 +213,8 @@ DROP TABLE IF EXISTS `htrans`;
 CREATE TABLE `htrans` (
   `id_htrans` varchar(10) NOT NULL,
   `id_customer` varchar(10) NOT NULL,
-  `tgl_transaksi` date NOT NULL
+  `tgl_transaksi` date NOT NULL,
+  `total_harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -159,12 +227,20 @@ DROP TABLE IF EXISTS `kategori_hotel`;
 CREATE TABLE `kategori_hotel` (
   `id_kategori` varchar(10) NOT NULL,
   `id_hotel` varchar(10) NOT NULL,
+  `nama_kamar` varchar(50) NOT NULL,
   `jumlah_kamar` int(11) NOT NULL,
   `harga_kamar` int(11) NOT NULL,
-  `available` int(11) NOT NULL,
   `gambar_kamar` varchar(50) NOT NULL,
   `detail_kamar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori_hotel`
+--
+
+INSERT INTO `kategori_hotel` (`id_kategori`, `id_hotel`, `nama_kamar`, `jumlah_kamar`, `harga_kamar`, `gambar_kamar`, `detail_kamar`) VALUES
+('KA00000001', 'HO00000001', 'Double Bed Room', 15, 200000, 'kamarpop1.jpg', 'Ini kamar dengan double bed cukup untuk 2 orang'),
+('KA00000002', 'HO00000001', 'Queen Single Room', 15, 240000, 'kamarpop1.jpg', 'Ini kamar dengan 1 queen size bed cukup untuk 2 orang');
 
 -- --------------------------------------------------------
 
@@ -240,7 +316,12 @@ CREATE TABLE `promo` (
   `id_promo` varchar(10) NOT NULL,
   `id_pemilik` varchar(10) NOT NULL,
   `judul_promo` text NOT NULL,
-  `isi_promo` text NOT NULL
+  `isi_promo` text NOT NULL,
+  `id_hotel` varchar(10) NOT NULL,
+  `id_product` varchar(10) NOT NULL,
+  `jmlh_potongan` int(11) NOT NULL,
+  `tgl_mulai` date NOT NULL,
+  `tgl_berakhir` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -299,6 +380,30 @@ ALTER TABLE `dtrans`
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fasilitas_hotel`
+--
+ALTER TABLE `fasilitas_hotel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fasilitas_kamar`
+--
+ALTER TABLE `fasilitas_kamar`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fas_utk_hotel`
+--
+ALTER TABLE `fas_utk_hotel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fas_utk_kamar`
+--
+ALTER TABLE `fas_utk_kamar`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -365,6 +470,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `fas_utk_hotel`
+--
+ALTER TABLE `fas_utk_hotel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`

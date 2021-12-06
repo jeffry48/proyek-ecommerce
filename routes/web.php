@@ -17,7 +17,16 @@ Route::get('/', function () {
     return view('test');
 });
 
+//Customer
+Route::get('/kamar', "KamarController@index");
 Route::get('/hotel', "HotelsController@index");
+Route::get('/kamar/addtoCart/{id}',['uses'=>'KamarController@addKamarToCart','as'=>'AddToCartKamar']);
+Route::get('/cart', ['uses'=>'KamarController@showCart','as'=>"cartKamars"]);
+Route::get('/cart/minJumlah/{id}',['uses'=>'KamarController@minJumlah','as'=>'minJumlah']);
+Route::get('/cart/plusJumlah/{id}',['uses'=>'KamarController@plusJumlah','as'=>'plusJumlah']);
+Route::get('/cart/deleteItemfromCart/{id}',['uses'=>'KamarController@deleteItemfromCart','as'=>'deleteItemfromCart']);
+
+//----------------------------------//
 Route::get('/register', function () {
     return view('register');
 });
