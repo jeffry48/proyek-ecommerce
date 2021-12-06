@@ -15,6 +15,6 @@ class Hotel extends Model
 
     public function tipe_kamar()
     {
-        return $this->belongsTo(KategoriHotel::class,"id_kategori","id_kategori");
+        return $this->belongsTo(Kamar::class,"id_kategori","id_kategori");
     }
 }

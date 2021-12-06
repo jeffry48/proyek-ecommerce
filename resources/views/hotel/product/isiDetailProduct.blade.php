@@ -24,7 +24,5 @@
         @if (!$mode_edit)
             readonly="true"
         @endif
-    >
-        {{$kamar->detail_kamar}}
-    </textarea>
+    >{{$kamar->detail_kamar}}</textarea>
 @endisset

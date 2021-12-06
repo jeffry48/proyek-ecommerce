@@ -12,6 +12,13 @@
 
     @include('hotel.include.header')
     @yield('content')
+    <script>
+        var msg = '{{Session::get('alert')}}';
+        var exist = '{{Session::has('alert')}}';
+        if(exist){
+          alert(msg);
+        }
+    </script>
     @include('hotel.include.footer')
 </body>
 </html>

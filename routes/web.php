@@ -66,6 +66,8 @@ Route::prefix("userhotel")->group(function ()
     Route::prefix("product")->group(function (){
         Route::get('/',"Hotel\HotelController@viewListProduct");
         Route::get('/tambah',"Hotel\HotelController@viewTambahProduct");
+        Route::post('/tambah/insert',"Hotel\HotelController@tambahProduct");
+        Route::post('/hapus',"Hotel\HotelController@hapusProduct");
         Route::get('/{id}',"Hotel\HotelController@viewDetailProduct");
         Route::get('/{id}/edit',"Hotel\HotelController@viewEditProduct");
         Route::post('/edit/simpan',"Hotel\HotelController@simpanEditProduct");

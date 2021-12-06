@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hotel;
 
 use App\Hotel;
 use App\Http\Controllers\Controller;
+use App\Kamar;
 use App\KategoriHotel;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class HotelController extends Controller
     public function viewListProduct()
     {
         $id_hotel = "HO00000001";
-        $tipe_kamar = KategoriHotel::select("*")->where("id_hotel", $id_hotel);
+        $tipe_kamar = Kamar::select("*")->where("id_hotel", $id_hotel);
         return view("hotel.product.listProduct",[
             "products"=>$tipe_kamar->get()
         ]);
@@ -39,7 +40,7 @@ class HotelController extends Controller
     }
     public function viewDetailProduct($id,Request $request)
     {
-        $tipe_kamar = KategoriHotel::select("*")->where("id_kategori",$id);
+        $tipe_kamar = Kamar::select("*")->where("id_kategori",$id);
         return view("hotel.product.detailProduct",[
             "mode_edit"=>false,
             "kamar"=>$tipe_kamar->first()
@@ -47,7 +48,7 @@ class HotelController extends Controller
     }
     public function viewEditProduct($id,Request $request)
     {
-        $tipe_kamar = KategoriHotel::select("*")->where("id_kategori",$id);
+        $tipe_kamar = Kamar::select("*")->where("id_kategori",$id);
         return view("hotel.product.editProduct",[
             "mode_edit"=>true,
             "kamar"=>$tipe_kamar->first()
@@ -58,9 +59,40 @@ class HotelController extends Controller
         $id_kategori = $request->btnSimpan;
         return redirect('/userhotel/product/'.$id_kategori);
     }
-    public function viewTambahJmlhProduct($id,Request $request)
+    public function tambahProduct(Request $request)
     {
-        return back();
+        $id_hotel = "HO00000001";
+        $nama_kamar = $request->namaKamar;
+        $harga_kamar = $request->hargaKamar;
+        $jmlh_kamar = $request->jmlhKamar;
+        $deskripsi_kamar = $request->deskripsiKamar;
+        $kamar_baru = [
+            "id_kategori" => $this->generateKodeKamar($id_hotel),
+            "id_hotel" => $id_hotel,
+            "nama_kamar" => $nama_kamar,
+            "harga_kamar" => $harga_kamar,
+            "jumlah_kamar" => $jmlh_kamar,
+            "detail_kamar" => $deskripsi_kamar,
+            "gambar_kamar" => "coba1"
+        ];
+
+        Kamar::create($kamar_baru);
+
+        return redirect('/userhotel/product')->with('alert','Tipe kamar berhasil ditambah');
+    }
+    public function generateKodeKamar($id_hotel)
+    {
+        $kode = "KA";
+        $idmaks = Kamar::max('id_kategori');
+        $index = ((int)substr($idmaks,2))+1;
+        $kode .= str_pad($index,8,'0',STR_PAD_LEFT);
+        return $kode;
+    }
+    public function hapusProduct(Request $request)
+    {
+        $id_kamar_dihapus = $request->btnHapus;
+        $kamar_dihapus = Kamar::find($id_kamar_dihapus)->delete();
+        return redirect('/userhotel/product')->with('alert','Tipe kamar berhasil dihapus');
     }
     //--PRODUCT
 

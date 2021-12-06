@@ -51,9 +51,7 @@ Deskripsi
     @if (!$mode_edit)
         readonly="true"
     @endif
->
-    {{$hotel->detail_hotel}}
-</textarea>
+>{{$hotel->detail_hotel}}</textarea>
 <br>
 <br>
 

@@ -10,7 +10,11 @@
         <option value="unavailable">Kamar yang tidak tersedia</option>
     </select>
 </form>
-
+<br>
+<form action="/userhotel/product/tambah" method="get">
+    <button type="submit" name="btnTambah">Tambah Kamar</button>
+</form>
+<br><br>
 @isset($products)
 <table border="1px solid black">
     <tr>
@@ -18,6 +22,7 @@
         <th>Harga</th>
         <th>Jumlah kamar</th>
         <th>Detail</th>
+        <th>Hapus</th>
     </tr>
     @foreach ($products as $product)
         <tr>
@@ -29,8 +34,22 @@
                     <button name="btnDetail">Detail</button>
                 </form>
             </td>
+            <td>
+                <form action="/userhotel/product/hapus" method="post">
+                    @csrf
+                    <button name="btnHapus" id="btnHapus" value="{{$product->id_kategori}}">Hapus</button>
+                </form>
+            </td>
         </tr>
     @endforeach
 </table>
 @endisset
+<script>
+    $("#btnHapus").click(function (event) {
+        alert('a');
+        // if (!confirm("Apakah yakin untuk menghapus tipe kamar ini?")) {
+        //     event.preventDefault();
+        // }
+    });
+</script>
 @endsection
