@@ -26,6 +26,9 @@
         .row{
             margin-top: 1%;
         }
+        .inputBox{
+            margin-top: 2%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
@@ -84,9 +87,63 @@
                                 <div class="col-sm-12">
                                     <form action="">
                                         <div class="box">
-                                            search:
-                                            <input type="text" name="" id="" class="form-control" placeholder="search">
+                                            <div class="col-sm-6" style="float: left">
+                                                <div class="inputBox">
+                                                    nama hotel:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    pemilik:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    review start:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    review end:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    daerah:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    kota:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    no telp:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    <button class="btn btn-primary">search</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="float: left">
+                                                <div class="inputBox">
+                                                    nama kamar:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    jumlah kamar start:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    jumlah kamar end:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    harga kamar start:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    harga kamar end:
+                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </form>
                                 </div>
                             </div>

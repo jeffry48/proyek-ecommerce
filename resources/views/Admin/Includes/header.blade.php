@@ -1,3 +1,5 @@
 <ul class="navbar-nav ml-auto">
-    <button class="btn" style="background-color: red; color: white; border: solid white 1px">Logout</button>
+    <button class="btn" style="background-color: red; border: solid white 1px">
+        <a href="logout"  style="color: white;">Logout</a>
+    </button>
 </ul>

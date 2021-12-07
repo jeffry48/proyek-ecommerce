@@ -50,7 +50,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>{{$currHotel[0]->nama_hotel}}</h1>
+                                <h1>{{$currKamar[0]->nama_kamar}}</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -62,63 +62,25 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card">
-                                    @for ($k = 0; $k < count($pemiliks); $k++)
-                                        @if ($pemiliks[$k]->id_pemilik==$currHotel[0]->id_pemilik)
-                                            <?php $currPem=$pemiliks[$k];?>
-                                        @endif
-                                    @endfor
                                     <div class="card-body">
-                                        <h4><a href="detailPem{{$currPem->id_pemilik}}">by: {{$currPem->nama_pemilik}}</a></h4>
+                                        <h4><a href="detailPem{{$currPem[0]->id_pemilik}}">By: {{$currPem[0]->nama_pemilik}}</a></h4>
                                     </div>
                                     <div class="card-body">
-                                        alamat: {{$currHotel[0]->alamat_hotel}}
+                                        <h4><a href="detailHotel{{$currHotel[0]->id_hotel}}">At: {{$currHotel[0]->nama_hotel}}</a></h4>
                                     </div>
                                     <div class="card-body">
-                                        telp: {{$currHotel[0]->no_telp_hotel}}
+                                        Jumlah Kamar: {{$currKamar[0]->jumlah_kamar}}
                                     </div>
                                     <div class="card-body">
-                                        jumlah kamar: {{$currHotel[0]->jumlah_kamar}}
+                                        Harga Kamar: {{$currKamar[0]->harga_kamar}}
                                     </div>
                                     <div class="card-body">
-                                        harga kamar: {{$currHotel[0]->no_telp_hotel}}
-                                    </div>
-                                    <div class="card-body">
-                                        detail: {{$currHotel[0]->detail_hotel}}
+                                        Detail Kamar: {{$currKamar[0]->detail_kamar}}
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn" style="background-color: red; color: white; border: solid white 1px">Ban</button>
                                 </div>
-                                @if (isset($kamars))
-                                    <div class="row">
-                                        <h4>Jenis Kamar di Hotel</h4>
-                                    </div>
-                                    @for ($i = 0; $i < (count($kamars)/3); $i++)
-                                    <div class="row">
-                                        @for ($j = 0; $j < 3; $j++)
-                                            @if (isset($kamars[$j+(3*$i)]))
-                                                <div class="col-md-4">
-                                                    <div class="card custom" id="{{$kamars[$j+(3*$i)]->id_kategori}}">
-                                                        <div class="card-header">
-                                                            {{$kamars[$j+(3*$i)]->nama_kamar}}
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="pic">
-                                                                <img src="" alt="">
-                                                            </div>
-                                                            <div class="detailHotel">
-                                                                jumlah kamar: {{$kamars[$j+(3*$i)]->jumlah_kamar}}
-                                                                <br>
-                                                                no telp: {{$kamars[$j+(3*$i)]->harga_kamar}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @endfor
-                                @endif
                             </div>
                         </div>
                         <!-- /.row -->
@@ -158,9 +120,6 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
-            });
-            $('.custom').click(function() {
-                window.location.href="detailKamar"+$(this).attr('id');
             });
         </script>
     </body>

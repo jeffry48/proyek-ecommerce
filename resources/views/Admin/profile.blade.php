@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>detail hotel</title>
+        <title>profile</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -16,19 +16,13 @@
 
     </head>
     <style>
-        .custom:hover{
-            background-color: wheat;
-            cursor: pointer;
-        }
-        .row{
-            margin-top: 1%;
-        }
+
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                @include('Admin.Includes.header')
+                @include('Admin.Includes.header');
             </nav>
             <!-- /.navbar -->
 
@@ -50,7 +44,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>{{$currHotel[0]->nama_hotel}}</h1>
+                                <h1>Profile</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -62,63 +56,42 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card">
-                                    @for ($k = 0; $k < count($pemiliks); $k++)
-                                        @if ($pemiliks[$k]->id_pemilik==$currHotel[0]->id_pemilik)
-                                            <?php $currPem=$pemiliks[$k];?>
-                                        @endif
-                                    @endfor
+                                <form action="prosesUpdateProfile" method="post">
                                     <div class="card-body">
-                                        <h4><a href="detailPem{{$currPem->id_pemilik}}">by: {{$currPem->nama_pemilik}}</a></h4>
-                                    </div>
-                                    <div class="card-body">
-                                        alamat: {{$currHotel[0]->alamat_hotel}}
-                                    </div>
-                                    <div class="card-body">
-                                        telp: {{$currHotel[0]->no_telp_hotel}}
-                                    </div>
-                                    <div class="card-body">
-                                        jumlah kamar: {{$currHotel[0]->jumlah_kamar}}
-                                    </div>
-                                    <div class="card-body">
-                                        harga kamar: {{$currHotel[0]->no_telp_hotel}}
-                                    </div>
-                                    <div class="card-body">
-                                        detail: {{$currHotel[0]->detail_hotel}}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="btn" style="background-color: red; color: white; border: solid white 1px">Ban</button>
-                                </div>
-                                @if (isset($kamars))
-                                    <div class="row">
-                                        <h4>Jenis Kamar di Hotel</h4>
-                                    </div>
-                                    @for ($i = 0; $i < (count($kamars)/3); $i++)
-                                    <div class="row">
-                                        @for ($j = 0; $j < 3; $j++)
-                                            @if (isset($kamars[$j+(3*$i)]))
-                                                <div class="col-md-4">
-                                                    <div class="card custom" id="{{$kamars[$j+(3*$i)]->id_kategori}}">
-                                                        <div class="card-header">
-                                                            {{$kamars[$j+(3*$i)]->nama_kamar}}
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="pic">
-                                                                <img src="" alt="">
-                                                            </div>
-                                                            <div class="detailHotel">
-                                                                jumlah kamar: {{$kamars[$j+(3*$i)]->jumlah_kamar}}
-                                                                <br>
-                                                                no telp: {{$kamars[$j+(3*$i)]->harga_kamar}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        @csrf
+                                        <div class="form-group">
+                                            @if (session()->get('message')!=null)
+                                                <div style="color: green">
+                                                    {{session()->get('message')}}
+                                                    {{session()->forget('message')}}
                                                 </div>
                                             @endif
-                                        @endfor
+                                        </div>
+                                        <?php
+                                            $currAdmin=DB::select('select * from admin where id_admin="'.session()->get("loggedIn").'"');
+                                        ?>
+                                        <div class="form-group">
+                                            Username:
+                                            <input type="text" name="username" value="{{$currAdmin[0]->username_admin}}" id="" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            Password:
+                                            <input type="password" name="password" value="{{$currAdmin[0]->password_admin}}" id="" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            nama lengkap:
+                                            <input type="text" name="nama" id="" value="{{$currAdmin[0]->nama_admin}}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            no telp:
+                                            <input type="text" name="noTelp" id="" value="{{$currAdmin[0]->no_telp_admin}}" class="form-control">
+                                        </div>
                                     </div>
-                                    @endfor
-                                @endif
+                                    <div class="card-footer">
+                                        <button class="btn btn-primary">Update Profile</button>
+                                    </div>
+                                </form>
+                                </div>
                             </div>
                         </div>
                         <!-- /.row -->
@@ -158,9 +131,6 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
-            });
-            $('.custom').click(function() {
-                window.location.href="detailKamar"+$(this).attr('id');
             });
         </script>
     </body>

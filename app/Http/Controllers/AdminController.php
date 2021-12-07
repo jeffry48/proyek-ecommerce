@@ -63,8 +63,10 @@ class AdminController extends Controller
                                 join kategori_hotel k on h.id_hotel=k.id_hotel
                                 where h.id_hotel="'.$idHotel.'"');
         $pemiliks=DB::select('select * from pemilik_hotel');
-        return view("Admin.detailHotel", ['currHotel'=>$currHotel, 'pemiliks'=>$pemiliks]);
+        $kamars=DB::select('select * from kategori_hotel where id_hotel="'.$idHotel.'"');
+        return view("Admin.detailHotel", ['currHotel'=>$currHotel, 'pemiliks'=>$pemiliks, "kamars"=>$kamars]);
     }
+
     public function getDetailpem($idPem)
     {
         $currpem=DB::select('select * from pemilik_hotel where id_pemilik="'.$idPem.'"');
@@ -85,5 +87,25 @@ class AdminController extends Controller
         $customers=DB::select('select * from customer');
         // dd($hotels[0]->nama_hotel);
         return view("Admin.listCustomer", ['customers'=>$customers]);
+    }
+    public function updateProfile(Request $req)
+    {
+        $username=$req->username;
+        $pass=$req->password;
+        $nama=$req->nama;
+        $telp=$req->noTelp;
+        DB::update('update admin set username_admin = "'.$username.'",
+        password_admin = "'.$pass.'",
+        nama_admin = "'.$nama.'",
+        no_telp_admin = "'.$telp.'"  where id_admin = ?', [session()->get("loggedIn")]);
+        return redirect("admin/profile");
+    }
+    public function getDetailKamar($idKamar)
+    {
+        $currKamar=DB::select('select * from kategori_hotel
+        where id_kategori="'.$idKamar.'"');
+        $currHotel=DB::select('select * from hotel where id_hotel="'.$currKamar[0]->id_hotel.'"');
+        $currPem=DB::select('select * from pemilik_hotel where id_pemilik="'.$currHotel[0]->id_pemilik.'"');
+        return view("Admin.detailKamar", ["currKamar"=>$currKamar, "currPem"=>$currPem, "currHotel"=>$currHotel]);
     }
 }

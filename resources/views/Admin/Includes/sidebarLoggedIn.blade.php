@@ -10,12 +10,12 @@
                             <li class="nav-header">Menu</li>
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Home</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="listHotel" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -44,6 +44,12 @@
                                         <a href="" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>List Banned Users</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="profile" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Profile Admin</p>
                                         </a>
                                     </li>
                                 </ul>

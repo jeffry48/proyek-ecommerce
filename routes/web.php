@@ -50,7 +50,16 @@ Route::prefix("admin")->group(function ()
 
     Route::get('/detailHotel{idHotel}', "AdminController@getDetailHotel");
     Route::get('/detailPem{idPem}', "AdminController@getDetailpem");
-
+    Route::get('/profile', function ()
+    {
+        return view ('Admin.profile');
+    });
+    Route::post('prosesUpdateProfile', "AdminController@updateProfile");
+    Route::get('logout', function () {
+        session()->flush();
+        return redirect("admin/login");
+    });
+    Route::get('detailKamar{idKamar}', "AdminController@getDetailKamar");
 
 });
 
