@@ -35,21 +35,21 @@
                 </form>
             </td>
             <td>
-                <form action="/userhotel/product/hapus" method="post">
+                <form action="/userhotel/product/hapus" id="formHapus" method="post">
                     @csrf
-                    <button name="btnHapus" id="btnHapus" value="{{$product->id_kategori}}">Hapus</button>
+                    <button name="btnHapus" id="btnHapusProduct" value="{{$product->id_kategori}}">Hapus</button>
                 </form>
+                <script>
+                    $(document).on('click', '#btnHapusProduct', function (event) {
+                        if (!confirm("Apakah yakin untuk menghapus tipe kamar ini?")) {
+                            event.preventDefault();
+                        }
+                        e.stopImmediatePropagation();
+                    });
+                </script>
             </td>
         </tr>
     @endforeach
 </table>
 @endisset
-<script>
-    $("#btnHapus").click(function (event) {
-        alert('a');
-        // if (!confirm("Apakah yakin untuk menghapus tipe kamar ini?")) {
-        //     event.preventDefault();
-        // }
-    });
-</script>
 @endsection

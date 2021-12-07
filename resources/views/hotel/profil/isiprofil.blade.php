@@ -19,20 +19,27 @@ Alamat Hotel
 ><br><br>
 Fasilitas
 <br>
-@isset($fasilitas)
-    @foreach ($fasilitas as $fasilitas)
-        <input type="checkbox" name="fasilitas[]" value="{{$fasilitas->nama}}" id=""
-            @if (isset($hotel->fasilitas[$fasilitas->id]))
-                checked
-            @endif
-            @if (!$mode_edit)
-                readonly="true"
-            @endif
-        >
-        {{$fasilitas->nama}}<br>
-    @endforeach
-@else Tidak ada fasilitas hotel
-@endisset
+@if (!$mode_edit)
+    @isset($hotel->fasilitas)
+        <ul>
+        @foreach ($hotel->fasilitas as $item)
+            <li>{{$item->nama_fasilitas}}</li>
+        @endforeach
+        </ul>
+    @else Tidak ada fasilitas hotel
+    @endisset
+@else
+    @isset($fasilitas)
+        @foreach ($fasilitas as $item)
+            <input type="checkbox" name="fasilitas[]" id="" value="{{$item->id_fasilitas}}"
+                @if ($hotel->fasilitas()->wherePivot("id_fasilitas",$item->id_fasilitas)->first())
+                    checked
+                @endif
+            > {{$item->nama_fasilitas}}
+            <br>
+        @endforeach
+    @endisset
+@endif
 <br>
 <br>
 

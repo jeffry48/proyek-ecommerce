@@ -14,7 +14,7 @@ class Kamar extends Model
 
     public function hotel()
     {
-        return $this->hasMany(Hotel::class,"id_hotel","id_hotel");
+        return $this->belongsTo(Hotel::class,"id_hotel","id_hotel");
     }
 
     public function getPriceAttrbitue($value){

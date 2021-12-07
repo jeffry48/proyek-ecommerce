@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hotel;
 
+use App\FasilitasHotel;
 use App\Hotel;
 use App\Http\Controllers\Controller;
 use App\Kamar;
@@ -130,22 +131,20 @@ class HotelController extends Controller
     {
         $id_hotel = "HO00000001";
         $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
-        $fasilitas = null;
         return view("hotel.profil.profil",[
             "mode_edit"=>false,
-            "hotel"=>$hotel->first(),
-            "fasilitas"=>$fasilitas
+            "hotel"=>$hotel->first()
         ]);
     }
     public function viewEditProfil()
     {
         $id_hotel = "HO00000001";
         $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
-        $fasilitas = null;
+        $fasilitas = FasilitasHotel::select("*");
         return view("hotel.profil.editProfil",[
             "mode_edit"=>true,
             "hotel"=>$hotel->first(),
-            "fasilitas"=>$fasilitas
+            "fasilitas"=>$fasilitas->get()
         ]);
     }
     public function simpanEditProfil(Request $request)

@@ -15,6 +15,12 @@ class Hotel extends Model
 
     public function tipe_kamar()
     {
-        return $this->belongsTo(Kamar::class,"id_kategori","id_kategori");
+        return $this->hasMany(Kamar::class,"id_kategori","id_kategori");
+    }
+
+    public function fasilitas()
+    {
+        return $this->belongsToMany(FasilitasHotel::class,'fas_utk_hotel','id_hotel','id_fasilitas')
+        ->withPivot("dikenai_biaya");
     }
 }
