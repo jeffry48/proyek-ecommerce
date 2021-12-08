@@ -1,12 +1,12 @@
 @extends('hotel.mainpage')
 @section('content')
-    <h1>EDIT PROFIL</h1>
-    <form action="/userhotel/profil/edit/simpan" id="form" method="post">
+    <h1>EDIT DETAIL KAMAR</h1>
+    <form action="/userhotel/product/edit/simpan" method="post">
         @csrf
-        @include('hotel.profil.isiprofil')
-        <button type="submit" name="btnSimpan" id="btnSave">Simpan</button>
+        @include('hotel.product.isiDetailProduct')
+        <br>
+        <button type="submit" name="btnSimpan" id="btnSave" value="{{$kamar->id_kategori}}">Simpan</button>
     </form>
-
     <script>
         $(document).ready(function () {
             $("#btnSave").click(function (event) {

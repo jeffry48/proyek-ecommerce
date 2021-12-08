@@ -48,6 +48,8 @@ Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
 //HOTEL--
 Route::prefix("userhotel")->group(function ()
 {
+    Route::get('/getdaerahfromkota',"Hotel\HotelController@getDaerahfromKota");
+
     Route::get('/','Hotel\HotelController@viewHome');
     Route::prefix("transaksi")->group(function (){
         Route::get('/',"Hotel\HotelController@viewListTransaksi");
@@ -61,11 +63,16 @@ Route::prefix("userhotel")->group(function ()
     Route::prefix("profil")->group(function (){
         Route::get('/',"Hotel\HotelController@viewProfil");
         Route::get('/edit',"Hotel\HotelController@viewEditProfil");
+        Route::post('/edit/simpan',"Hotel\HotelController@simpanEditProfil");
     });
     Route::prefix("product")->group(function (){
         Route::get('/',"Hotel\HotelController@viewListProduct");
         Route::get('/tambah',"Hotel\HotelController@viewTambahProduct");
-        Route::get('/{id}',"Hotel\HotelController@viewTambahProduct");
+        Route::post('/tambah/insert',"Hotel\HotelController@tambahProduct");
+        Route::post('/hapus',"Hotel\HotelController@hapusProduct");
+        Route::get('/{id}',"Hotel\HotelController@viewDetailProduct");
+        Route::get('/{id}/edit',"Hotel\HotelController@viewEditProduct");
+        Route::post('/edit/simpan',"Hotel\HotelController@simpanEditProduct");
     });
 });
 //--HOTEL
