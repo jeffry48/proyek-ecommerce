@@ -48,6 +48,8 @@ Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
 //HOTEL--
 Route::prefix("userhotel")->group(function ()
 {
+    Route::get('/getdaerahfromkota',"Hotel\HotelController@getDaerahfromKota");
+
     Route::get('/','Hotel\HotelController@viewHome');
     Route::prefix("transaksi")->group(function (){
         Route::get('/',"Hotel\HotelController@viewListTransaksi");
