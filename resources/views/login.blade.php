@@ -93,11 +93,11 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     Username:
-                                                    <input type="text" name="username" id="" class="form-control">
+                                                    <input type="text" name="username" id="" class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
                                                     Password:
-                                                    <input type="password" name="password" id="" class="form-control">
+                                                    <input type="password" name="password" id="" class="form-control" required>
                                                 </div>
                                                 <input type="radio" name="jenisUser" id="" value="customer" checked="true">customer
                                                 <input type="radio" name="jenisUser" id="" value="pemilik">pemilik
@@ -106,6 +106,7 @@
                                                 <button class="btn btn-primary">Login</button>
                                             </div>
                                         </form>
+                                        Belum punya akun?? <a href="/register">klik disini!</a>
                                     </div>
                                 </div>
                             </div>
