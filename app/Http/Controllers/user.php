@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,51 +12,80 @@ class user extends Controller
 {
     public function register(Request $req)
     {
-        if ($req->jenisUser=="customer") {
-            $cekUser=DB::select('select * from customer');
-            if($cekUser==null){
-                DB::insert('insert into customer values (?, ?, ?, ?, ?)',
-                ["CUS0001", $req->username, $req->password, $req->nama, $req->noTelp]);
+        $error = "";
+        $cekCustomer = Customer::where('username_customer',$req->username)->get();
+        if($cekCustomer->count()>0){
+            $error = "username sudah terpakai";
+        }else{
+            $ctrRow = Customer::where('no_telp_customer','>',0)->get();
+            $lastId=substr($ctrRow[0]->id_customer, 3);
+            $lastId+=1;
+            $newId="CUS";
+            if($lastId<10){
+                $newId.="000000";
             }
-            else{
-                $ctrRow=DB::select('select id_customer from customer order by id_customer desc');
-                $lastId=substr($ctrRow[0]->id_customer, 3);
+            else if($lastId>=10&&$lastId<100){
+                $newId.="00000";
+            }
+            else if($lastId>=100&&$lastId<1000){
+                $newId.="0000";
+            }
+            $newId.=$lastId;
 
-                $lastId+=1;
-                $newId="CUS";
-                if($lastId<10){
-                    $newId.="000";
+            if($req->password == $req->confirm){
+                $newCustomer = new Customer;
+                $newCustomer->id_customer = $newId;
+                $newCustomer->username_customer = $req->username;
+                $newCustomer->password_customer = $req->password;
+                $newCustomer->nama_customer = $req->nama;
+                $newCustomer->no_telp_customer = $req->noTelp;
+                $newCustomer->email_customer = $req->email;
+                if($req->jenisUser=="customer"){
+                    $newCustomer->tipe_customer = 0;
+                }else{
+                    $newCustomer->tipe_customer = 1;
                 }
-                else if($lastId>=10&&$lastId<100){
-                    $newId.="00";
-                }
-                else if($lastId>=100&&$lastId<1000){
-                    $newId.="0";
-                }
-                $newId.=$lastId;
-                // echo $newId;
-                DB::insert('insert into customer values (?, ?, ?, ?, ?)',
-                [$newId, $req->username, $req->password, $req->nama, $req->noTelp]);
+                $newCustomer->save();
+            }else{
+                $error = "password tidak sama dengan confirm password";
             }
-        session(['message' => "register berhasil"]);
-        return redirect('register');
+        }
+        if($error == ""){
+            return redirect("login");
+        }else{
+            session(['message' => $error]);
+            return redirect('register');
         }
     }
+
+
     public function login(Request $req)
     {
-        if ($req->jenisUser=="customer") {
-            $cekLogin=DB::select('select * from customer where username_customer="'.$req->username.'" and
-            password_customer="'.$req->password.'"');
-            if (count($cekLogin)>0) {
+        if($req->jenisUser=="customer"){
+            $jeniscustomer = 0;
+        }else{
+            $jeniscustomer = 1;
+        }
+
+        $cekLogin = Customer::where('username_customer',$req->username)
+                        ->where('password_customer',$req->password)
+                        ->where('tipe_customer',$jeniscustomer)
+                        ->get();
+
+        if($cekLogin->count()>0){
+            if($jeniscustomer==0){
                 session(['loggedIn' => $cekLogin[0]->id_customer]);
-                return redirect("listHotel");
+                return redirect('hotel');
+            }else{
+                //ini buat login ke penyewa admin
+
             }
-            else{
-                session(['errMessage' => "username/password salah"]);
-                return redirect("login");
-            }
+        }else{
+            session(['errMessage' => "username/password salah"]);
+            return redirect("login");
         }
     }
+
     public function getAllFavorite()
     {
         $hotels=DB::select('select * from favorite f
