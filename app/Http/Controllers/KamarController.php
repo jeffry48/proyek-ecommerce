@@ -30,19 +30,21 @@ class KamarController extends Controller
         }else{
             //insert ke cart kalau tidak ada
             $id_cart = "CA";
-            $allCart = Cart::all();
-            $banyak = $allCart->count();
+            $allCart = Cart::where('jumlah_kamar_pesan','>',0)->orderBy('id_cart', 'DESC')->get();
+            $banyak = substr($allCart[0]->id_cart,3);
             if($banyak<9){
                 $id_cart = $id_cart."0000000".($banyak+1);
             }else if ($banyak<99){
                 $id_cart = $id_cart."000000".($banyak+1);
+            }else if ($banyak<999){
+                $id_cart = $id_cart."00000".($banyak+1);
             }
 
             $newCart = new Cart;
             $newCart->id_cart = $id_cart;
             $newCart->id_customer = "guest001";
             $newCart->id_kamar = $id;
-            $newCart->jumlah_kamar = $jumlah;
+            $newCart->jumlah_kamar_pesan = $jumlah;
             $newCart->tgl_checkin = $tgl_checkin;
             $newCart->tgl_checkout = $tgl_checkout;
             $newCart->save();
