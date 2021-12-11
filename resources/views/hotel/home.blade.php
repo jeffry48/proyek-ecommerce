@@ -1,6 +1,15 @@
 @extends('hotel.mainpage')
 @section('content')
 
+<h1>Hotel
+    @isset($nama_hotel) {{$nama_hotel}}
+    @else Unknown
+@endisset</h1>
+<h2>Welcome,
+    @isset($adminhotel->nama_pemilik) {{$adminhotel->nama_pemilik}}
+    @else adminhotel1
+@endisset</h1>
+<br>
 <h2>Kedatangan untuk Hari Ini</h2>
 @isset($arrival)
     {{-- tampilkan tabel --}}

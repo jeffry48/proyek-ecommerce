@@ -83,7 +83,7 @@
                                         @csrf
                                         <div class="form-group">
                                             @if (session()->get('message')!=null)
-                                                <div style="color: green">
+                                                <div style="color: white; background-color:red">
                                                     {{session()->get('message')}}
                                                     {{session()->forget('message')}}
                                                 </div>
@@ -91,25 +91,35 @@
                                         </div>
                                         <div class="form-group">
                                             Username:
-                                            <input type="text" name="username" id="" class="form-control">
+                                            <input type="text" name="username" id="" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             Password:
-                                            <input type="password" name="password" id="" class="form-control">
+                                            <input type="password" name="password" id="" class="form-control" required>
                                         </div>
                                         <div class="form-group">
-                                            nama lengkap:
-                                            <input type="text" name="nama" id="" class="form-control">
+                                            Confirm Password:
+                                            <input type="password" name="confirm" id="" class="form-control" required>
                                         </div>
                                         <div class="form-group">
-                                            no telp:
-                                            <input type="text" name="noTelp" id="" class="form-control">
+                                            Nama Lengkap:
+                                            <input type="text" name="nama" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            No Telp:
+                                            <input type="text" name="noTelp" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            email:
+                                            <input type="text" name="email" id="" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="card-footer">
                                         <button class="btn btn-primary">Register</button>
                                     </div>
                                 </form>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary"><a href="/login" style="color:white">Back to Login</a></button>
                                 </div>
                             </div>
                         </div>
