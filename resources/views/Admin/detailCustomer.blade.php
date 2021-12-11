@@ -16,6 +16,9 @@
 
     </head>
     <style>
+        .pic{
+            /* background-color: blue; */
+        }
         .custom:hover{
             background-color: wheat;
             cursor: pointer;
@@ -50,7 +53,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>{{$currKamar[0]->nama_kamar}}</h1>
+                                <h1>{{$currCust[0]->nama_customer}}</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -63,23 +66,25 @@
                             <div class="col-sm-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4><a href="detailPem{{$currPem[0]->id_pemilik}}">By: {{$currPem[0]->nama_pemilik}}</a></h4>
+                                        username: {{$currCust[0]->username_customer}}
                                     </div>
                                     <div class="card-body">
-                                        <h4><a href="detailHotel{{$currHotel[0]->id_hotel}}">At: {{$currHotel[0]->nama_hotel}}</a></h4>
+                                        nama: {{$currCust[0]->nama_customer}}
                                     </div>
                                     <div class="card-body">
-                                        Jumlah Kamar: {{$currKamar[0]->jumlah_kamar}}
+                                        no telepon: {{$currCust[0]->no_telp_customer}}
                                     </div>
                                     <div class="card-body">
-                                        Harga Kamar: {{$currKamar[0]->harga_kamar}}
-                                    </div>
-                                    <div class="card-body">
-                                        Detail Kamar: {{$currKamar[0]->detail_kamar}}
+                                        email: {{$currCust[0]->email_customer}}
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary">send Message</button>
+                                <button class="btn" style="background-color: red; color: white; border: solid white 1px">Ban</button>
+                            </div>
                         </div>
+
                         <!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </section>
@@ -117,6 +122,9 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
+            });
+            $('.custom').click(function() {
+                window.location.href="detailHotel"+$(this).attr('id');
             });
         </script>
     </body>

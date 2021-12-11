@@ -35,15 +35,15 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="listBanHotel" class="nav-link">
+                                        <a href="" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>List Banned Hotel</p>
+                                            <p>List Transaksi</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>List Banned Users</p>
+                                            <p>Daerah dan Kota</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">

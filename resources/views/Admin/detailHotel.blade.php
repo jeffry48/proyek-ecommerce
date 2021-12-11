@@ -77,17 +77,11 @@
                                         telp: {{$currHotel[0]->no_telp_hotel}}
                                     </div>
                                     <div class="card-body">
-                                        jumlah kamar: {{$currHotel[0]->jumlah_kamar}}
-                                    </div>
-                                    <div class="card-body">
                                         harga kamar: {{$currHotel[0]->no_telp_hotel}}
                                     </div>
                                     <div class="card-body">
                                         detail: {{$currHotel[0]->detail_hotel}}
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="btn" style="background-color: red; color: white; border: solid white 1px">Ban</button>
                                 </div>
                                 @if (isset($kamars))
                                     <div class="row">
@@ -109,7 +103,7 @@
                                                             <div class="detailHotel">
                                                                 jumlah kamar: {{$kamars[$j+(3*$i)]->jumlah_kamar}}
                                                                 <br>
-                                                                no telp: {{$kamars[$j+(3*$i)]->harga_kamar}}
+                                                                harga kamar: Rp. {{$kamars[$j+(3*$i)]->harga_kamar}}
                                                             </div>
                                                         </div>
                                                     </div>

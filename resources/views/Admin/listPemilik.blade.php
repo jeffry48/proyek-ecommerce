@@ -26,6 +26,9 @@
         .row{
             margin-top: 1%;
         }
+        .inputBox{
+            margin-top: 2%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
@@ -71,10 +74,33 @@
                         <div class="collapse" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <form action="">
-                                        <div class="box">
-                                            search:
-                                            <input type="text" name="" id="" class="form-control" placeholder="search">
+                                    <form action="searchPemilik">
+                                        <div class="inputBox">
+                                            nama pemilik:
+                                            <input type="text" name="nama" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            username:
+                                            <input type="text" name="username" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            no telp pemilik:
+                                            <input type="text" name="noTelp" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            email pemilik:
+                                            <input type="text" name="email" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            banned:
+                                            <select name="banned" id="" class="form-control">
+                                                <option value="">All</option>
+                                                <option value="0">Not Banned</option>
+                                                <option value="1">Banned</option>
+                                            </select>
+                                        </div>
+                                        <div class="inputBox">
+                                            <button class="btn btn-primary">Search Pemilik</button>
                                         </div>
                                     </form>
                                 </div>

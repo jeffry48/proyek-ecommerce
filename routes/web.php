@@ -84,7 +84,10 @@ Route::prefix("admin")->group(function ()
         return redirect("admin/login");
     });
     Route::get('detailKamar{idKamar}', "AdminController@getDetailKamar");
-
+    Route::get('detailCust{idCust}', "AdminController@getDetailCustomer");
+    Route::get('listDaerahKota', "AdminController@getAllDaerahKota");
+    Route::get('searchHotel', "AdminController@searchHotel");
+    Route::get('searchPemilik', "AdminController@searchPemilik");
 });
 
 

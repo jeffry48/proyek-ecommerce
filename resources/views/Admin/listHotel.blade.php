@@ -79,71 +79,70 @@
                 <section class="content">
                     <div class="container-fluid">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            Search
+                                Search
                         </button>
                         <!-- buat search -->
                         <div class="collapse" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <form action="">
+                                    <form action="searchHotel" method="get">
                                         <div class="box">
                                             <div class="col-sm-6" style="float: left">
                                                 <div class="inputBox">
                                                     nama hotel:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="nama" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     pemilik:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="pemilik" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     review start:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="revS" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     review end:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="revE" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     daerah:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="daerah" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     kota:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="kota" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     no telp:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="noTelp" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
-                                                    <button class="btn btn-primary">search</button>
+                                                    <button class="btn btn-primary">search hotel</button>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6" style="float: left">
                                                 <div class="inputBox">
                                                     nama kamar:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="namaKamar" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     jumlah kamar start:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="jumKS" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     jumlah kamar end:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="jumKE" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     harga kamar start:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="hargaKS" id="" class="form-control" placeholder="">
                                                 </div>
                                                 <div class="inputBox">
                                                     harga kamar end:
-                                                    <input type="text" name="" id="" class="form-control" placeholder="">
+                                                    <input type="text" name="hargaKE" id="" class="form-control" placeholder="">
                                                 </div>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
