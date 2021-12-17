@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>list hotel</title>
+        <title>List Daerah</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,11 +19,18 @@
         .pic{
             /* background-color: blue; */
         }
-        .card:hover{
-            background-color: wheat;
+        .deleteBtn{
+            background-color: red;
+        }
+        .deleteBtn:hover{
             cursor: pointer;
+            background-color: lightcoral;
+            color: black;
         }
         .row{
+            margin-top: 1%;
+        }
+        .inputBox{
             margin-top: 1%;
         }
     </style>
@@ -37,8 +44,6 @@
 
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <!-- Brand Logo -->
-
                 <!-- Sidebar -->
                 <div class="sidebar">
                     @include('Admin.Includes.sidebarLoggedIn')
@@ -53,7 +58,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>List Customer</h1>
+                                <h1>List Daerah</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -67,37 +72,81 @@
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             Search
                         </button>
+
+                        <a href="tambahDaerah" class="btn btn-primary">Tambah Daerah Baru</a>
+                        <a href="listKota" class="btn btn-primary">Ke Kota</a>
                         <!-- buat search -->
                         <div class="collapse" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <form action="">
+                                    <form action="searchDaerah" method="GET">
                                         <div class="box">
-                                            search:
-                                            <input type="text" name="" id="" class="form-control" placeholder="search">
+                                            <div class="inputBox">
+                                                Nama Daerah:
+                                                <input type="text" name="namaD" id="" class="form-control" placeholder="search">
+                                            </div>
+                                            <div class="inputBox">
+                                                Nama Kota:
+                                                <select name="idKota" id="" class="form-control">
+                                                    <option value="">All</option>
+                                                    <?php
+                                                        use Illuminate\Support\Facades\DB;
+                                                        $kota=DB::select('select * from kota');
+                                                    ?>
+                                                    @foreach ($kota as $k)
+                                                        <option value="{{$k->id_kota}}">{{$k->nama_kota}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="inputBox">
+                                                <input type="submit" class="btn btn-primary" value="Search Daerah">
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        @if (isset($customers))
-                            @for ($i = 0; $i < (count($customers)/3); $i++)
+                        @if (isset($daerah))
+                            @for ($i = 0; $i < (count($daerah)/3); $i++)
                             <div class="row">
                                 @for ($j = 0; $j < 3; $j++)
-                                    @if (isset($customers[$j+(3*$i)]))
+                                    @if (isset($daerah[$j+(3*$i)]))
                                         <div class="col-md-4">
-                                            <div class="card" id="{{$customers[$j+(3*$i)]->id_customer}}">
+                                            <div class="card" id="{{$daerah[$j+(3*$i)]->id_daerah}}">
                                                 <div class="card-header">
-                                                    {{$customers[$j+(3*$i)]->nama_customer}}
+                                                    {{$daerah[$j+(3*$i)]->nama_daerah}}
+                                                    @foreach ($kota as $k)
+                                                        @if($k->id_kota==$daerah[$j+(3*$i)]->id_kota)
+                                                            <br>
+                                                            Kota: {{$k->nama_kota}}
+                                                        @endif
+                                                    @endforeach
                                                 </div>
                                                 <div class="card-body">
-                                                    <div class="detailHotel">
-                                                        id: {{$customers[$j+(3*$i)]->id_customer}}
-                                                        <br>
-                                                        username: {{$customers[$j+(3*$i)]->username_customer}}
-                                                        <br>
-                                                        no telp: {{$customers[$j+(3*$i)]->no_telp_customer}}
+                                                    <button class="btn btn-primary deleteBtn" style="float: right;" data-toggle="modal" data-target="#exampleModal{{$daerah[$j+(3*$i)]->id_daerah}}">
+                                                        Delete
+                                                    </button>
+                                                    <div class="modal fade" id="exampleModal{{$daerah[$j+(3*$i)]->id_daerah}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Daerah</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Hapus daerah {{$daerah[$j+(3*$i)]->nama_daerah}}?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <a type="button" href="deleteDaerah{{$daerah[$j+(3*$i)]->id_daerah}}" class="btn btn-primary" style="background-color: red">
+                                                                    Hapus
+                                                                </a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,9 +193,6 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
-            });
-            $('.card').click(function() {
-                window.location.href="detailCust"+$(this).attr('id');
             });
         </script>
     </body>

@@ -27,14 +27,14 @@
             margin-top: 1%;
         }
         .inputBox{
-            margin-top: 2%;
+            margin-top: 1%;
         }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                @include('Admin.Includes.header');
+                @include('Admin.Includes.header')
             </nav>
             <!-- /.navbar -->
 

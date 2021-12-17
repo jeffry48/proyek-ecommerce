@@ -65,7 +65,6 @@ class AdminController extends Controller
         $kamars=DB::select('select * from kategori_hotel where id_hotel="'.$idHotel.'"');
         return view("Admin.detailHotel", ['currHotel'=>$currHotel, 'pemiliks'=>$pemiliks, "kamars"=>$kamars]);
     }
-
     public function getDetailpem($idPem)
     {
         $currpem=DB::select('select * from pemilik_hotel where id_pemilik="'.$idPem.'"');
@@ -73,7 +72,6 @@ class AdminController extends Controller
                             join pemilik_hotel p on p.id_pemilik=h.id_pemilik');
         return view("Admin.detailPem", ['hotels'=>$hotels, 'currPem'=>$currpem]);
     }
-
     public function getAllPem()
     {
         $pemiliks=DB::select('select * from pemilik_hotel');
@@ -215,5 +213,150 @@ class AdminController extends Controller
                                 CAST(ban as CHAR) like "%'.$banned.'%"');
         // dd($searchResult);
         return view("Admin.listPemilik", ['pemiliks'=>$searchResult]);
+    }
+    public function getAllDaerah()
+    {
+        $daerah=DB::select('select * from daerah');
+        return view('Admin.listDaerah', ['daerah'=>$daerah]);
+    }
+    public function tambahDaerah(Request $req)
+    {
+        $nama=$req->daerah;
+        $idk=$req->idKota;
+
+        $cekD=DB::select("select * from daerah");
+        if($cekD==null){
+            DB::insert("insert into daerah values(?, ?, ?)", ["DA00000001", $nama, $idk]);
+        }
+        else{
+            $ctrRow=DB::select('select id_daerah from daerah order by id_daerah desc');
+            $lastId=substr($ctrRow[0]->id_daerah, 3);
+
+            $lastId+=1;
+            $newId="DA";
+            if($lastId<10){
+                $newId.="0000000";
+            }
+            else if($lastId>=10&&$lastId<100){
+                $newId.="0000000";
+            }
+            else if($lastId>=100&&$lastId<1000){
+                $newId.="000000";
+            }
+            else if($lastId>=1000&&$lastId<10000){
+                $newId.="00000";
+            }
+            else if($lastId>=10000&&$lastId<100000){
+                $newId.="0000";
+            }
+            else if($lastId>=100000&&$lastId<1000000){
+                $newId.="000";
+            }
+            else if($lastId>=1000000&&$lastId<10000000){
+                $newId.="00";
+            }
+            else if($lastId>=10000000&&$lastId<100000000){
+                $newId.="0";
+            }
+
+            $newId.=$lastId;
+            echo $newId;
+
+            DB::insert("insert into daerah values(?, ?, ?)", [$newId, $nama, $idk]);
+        }
+
+
+        return redirect("admin/listDaerah");
+    }
+    public function deleteDaerah($idD)
+    {
+        DB::table('daerah')->where('id_daerah', '=', $idD)->delete();
+        return redirect("admin/listDaerah");
+    }
+    public function searchDaerah(Request $req)
+    {
+        $namaD=$req->namaD;
+        $idK=$req->idKota;
+
+        if($namaD==null){
+            $namaD="";
+        }
+        if($idK==null){
+            $idK="KO";
+        }
+
+        $hasilSearch=DB::select("select * from daerah where
+                    (nama_daerah) like ('%".$namaD."%') and
+                    id_kota like '%".$idK."%'");
+
+        return view("Admin.listDaerah", ['daerah'=>$hasilSearch]);
+    }
+    public function getAllKota()
+    {
+        $kota=DB::select('select * from kota');
+        return view('Admin.listKota', ['kota'=>$kota]);
+    }
+    public function tambahKota(Request $req)
+    {
+        $namaK=$req->kota;
+
+        $cekK=DB::select('select * from kota');
+        if($cekK==null){
+            DB::insert('insert into kota values(?, ?)', ['KO00000001', $namaK]);
+        }
+        else{
+            $ctrRow=DB::select('select * from kota order by id_kota desc');
+            $lastId=substr($ctrRow[0]->id_kota, 3);
+            $lastId+=1;
+            $newId="KO";
+            if($lastId<10){
+                $newId.="0000000";
+            }
+            else if($lastId>=10&&$lastId<100){
+                $newId.="0000000";
+            }
+            else if($lastId>=100&&$lastId<1000){
+                $newId.="000000";
+            }
+            else if($lastId>=1000&&$lastId<10000){
+                $newId.="00000";
+            }
+            else if($lastId>=10000&&$lastId<100000){
+                $newId.="0000";
+            }
+            else if($lastId>=100000&&$lastId<1000000){
+                $newId.="000";
+            }
+            else if($lastId>=1000000&&$lastId<10000000){
+                $newId.="00";
+            }
+            else if($lastId>=10000000&&$lastId<100000000){
+                $newId.="0";
+            }
+
+            $newId.=$lastId;
+            echo $newId;
+
+            DB::insert('insert into kota values(?, ?)', [$newId, $namaK]);
+        }
+        return redirect('admin/listKota');
+    }
+    public function searchKota(Request $req)
+    {
+        $namaK=$req->namaK;
+
+        if($namaK==null){
+            $namaK="";
+        }
+
+        $hasilSearch=DB::select("select * from kota where
+                    (nama_kota) like ('%".$namaK."%')");
+
+        return view("Admin.listKota", ['kota'=>$hasilSearch]);
+    }
+    public function deleteKota($idk)
+    {
+        DB::table('kota')->where('id_kota', '=', $idk)->delete();
+        return redirect("admin/listKota");
     }
 }

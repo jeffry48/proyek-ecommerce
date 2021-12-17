@@ -27,7 +27,7 @@
             margin-top: 1%;
         }
         .inputBox{
-            margin-top: 2%;
+            margin-top: 1%;
         }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -44,7 +44,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('Admin.Includes.sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn')
                 </div>
                 <!-- /.sidebar -->
             </aside>

@@ -38,7 +38,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('Admin.Includes.sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn')
                 </div>
                 <!-- /.sidebar -->
             </aside>

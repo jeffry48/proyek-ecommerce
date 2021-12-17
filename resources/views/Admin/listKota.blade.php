@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>list hotel</title>
+        <title>List kota</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,11 +19,18 @@
         .pic{
             /* background-color: blue; */
         }
-        .card:hover{
-            background-color: wheat;
+        .deleteBtn{
+            background-color: red;
+        }
+        .deleteBtn:hover{
             cursor: pointer;
+            background-color: lightcoral;
+            color: black;
         }
         .row{
+            margin-top: 1%;
+        }
+        .inputBox{
             margin-top: 1%;
         }
     </style>
@@ -53,14 +60,11 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>List Customer</h1>
+                                <h1>List Kota</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
                 </section>
-                <?php
-
-                ?>
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
@@ -68,36 +72,58 @@
                             Search
                         </button>
                         <!-- buat search -->
+                        <a href="tambahKota" class="btn btn-primary">Tambah Kota Baru</a>
+                        <a href="listDaerah" class="btn btn-primary">Ke Daerah</a>
                         <div class="collapse" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <form action="">
-                                        <div class="box">
+                                    <form action="searchKota">
+                                        <div class="inputBox">
                                             search:
-                                            <input type="text" name="" id="" class="form-control" placeholder="search">
+                                            <input type="text" name="namaK" id="" class="form-control" placeholder="search">
+                                        </div>
+                                        <div class="inputBox">
+                                            <input type="submit" value="Search Kota" class="btn btn-primary">
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        @if (isset($customers))
-                            @for ($i = 0; $i < (count($customers)/3); $i++)
+                        @if (isset($kota))
+                            @for ($i = 0; $i < (count($kota)/3); $i++)
                             <div class="row">
                                 @for ($j = 0; $j < 3; $j++)
-                                    @if (isset($customers[$j+(3*$i)]))
+                                    @if (isset($kota[$j+(3*$i)]))
                                         <div class="col-md-4">
-                                            <div class="card" id="{{$customers[$j+(3*$i)]->id_customer}}">
+                                            <div class="card" id="{{$kota[$j+(3*$i)]->id_kota}}">
                                                 <div class="card-header">
-                                                    {{$customers[$j+(3*$i)]->nama_customer}}
+                                                    {{$kota[$j+(3*$i)]->nama_kota}}
                                                 </div>
                                                 <div class="card-body">
-                                                    <div class="detailHotel">
-                                                        id: {{$customers[$j+(3*$i)]->id_customer}}
-                                                        <br>
-                                                        username: {{$customers[$j+(3*$i)]->username_customer}}
-                                                        <br>
-                                                        no telp: {{$customers[$j+(3*$i)]->no_telp_customer}}
+                                                    <button class="btn btn-primary deleteBtn" style="float: right;" data-toggle="modal" data-target="#exampleModal{{$kota[$j+(3*$i)]->id_kota}}">
+                                                        Delete
+                                                    </button>
+                                                    <div class="modal fade" id="exampleModal{{$kota[$j+(3*$i)]->id_kota}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Kota</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Hapus kota {{$kota[$j+(3*$i)]->nama_kota}}?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <a type="button" href="deletekota{{$kota[$j+(3*$i)]->id_kota}}" class="btn btn-primary" style="background-color: red">
+                                                                    Hapus
+                                                                </a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,9 +170,6 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
-            });
-            $('.card').click(function() {
-                window.location.href="detailCust"+$(this).attr('id');
             });
         </script>
     </body>

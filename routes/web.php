@@ -56,8 +56,7 @@ Route::get('/listFavorite', "user@getAllFavorite");
 // Route::get('/removeFavorite', "hotels@removeFavorite");
 // Route::get('/listFavorite', "user@getAllFavorite");
 
-//Admin
-// Route::get('/adminProducts', 'Admin\AdminProductsController@displayProducts');
+//////////////////////////////////Admin////////////////////////////////////
 Route::prefix("admin")->group(function ()
 {
     Route::get('/register', function () {
@@ -68,27 +67,47 @@ Route::prefix("admin")->group(function ()
         return view('Admin.login');
     });
     Route::post('/prosesLogin', "AdminController@login");
-    Route::get('/listHotel', "AdminController@getAllHotels");
-    Route::get('/listPem', "AdminController@getAllPem");
-    Route::get('/listCust', "AdminController@getAllCust");
-
-    Route::get('/detailHotel{idHotel}', "AdminController@getDetailHotel");
-    Route::get('/detailPem{idPem}', "AdminController@getDetailpem");
+    Route::post('prosesUpdateProfile', "AdminController@updateProfile");
     Route::get('/profile', function ()
     {
         return view ('Admin.profile');
     });
-    Route::post('prosesUpdateProfile', "AdminController@updateProfile");
     Route::get('logout', function () {
         session()->flush();
         return redirect("admin/login");
     });
-    Route::get('detailKamar{idKamar}', "AdminController@getDetailKamar");
-    Route::get('detailCust{idCust}', "AdminController@getDetailCustomer");
-    Route::get('listDaerahKota', "AdminController@getAllDaerahKota");
-    Route::get('searchHotel', "AdminController@searchHotel");
+    //pemilik dan customer
     Route::get('searchPemilik', "AdminController@searchPemilik");
+    Route::get('detailCust{idCust}', "AdminController@getDetailCustomer");
+    Route::get('/detailPem{idPem}', "AdminController@getDetailpem");
+    Route::get('/listPem', "AdminController@getAllPem");
+    Route::get('/listCust', "AdminController@getAllCust");
+
+    //hotel dan kamar
+    Route::get('searchHotel', "AdminController@searchHotel");
+    Route::get('detailKamar{idKamar}', "AdminController@getDetailKamar");
+    Route::get('/detailHotel{idHotel}', "AdminController@getDetailHotel");
+    Route::get('/listHotel', "AdminController@getAllHotels");
+
+    //daerah dan kota
+    Route::get('listDaerah', "AdminController@getAllDaerah");
+    Route::get('listKota', "AdminController@getAllKota");
+    Route::get('tambahDaerah', function ()
+    {
+        return view("Admin.tambahDaerah");
+    });
+    Route::post('prosesTambahDaerah', "AdminController@TambahDaerah");
+    Route::get('deleteDaerah{idD}', "AdminController@deleteDaerah");
+    Route::get('searchDaerah', "AdminController@searchDaerah");
+    Route::get('tambahKota', function ()
+    {
+        return view("Admin.tambahKota");
+    });
+    Route::post('prosesTambahKota', "AdminController@tambahKota");
+    Route::get('searchKota', "AdminController@searchKota");
+
 });
+////////////////////////////////////////////////////////////////////////////
 
 
 //HOTEL--
