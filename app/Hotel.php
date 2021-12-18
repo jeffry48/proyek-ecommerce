@@ -33,4 +33,9 @@ class Hotel extends Model
         return $this->belongsToMany(FasilitasHotel::class,'fas_utk_hotel','id_hotel','id_fasilitas')
         ->withPivot("dikenai_biaya");
     }
+
+    public function metode_bayar()
+    {
+        return $this->belongsToMany(MetodeBayar::class,'hotel_metode_bayar','id_hotel','id_metode');
+    }
 }

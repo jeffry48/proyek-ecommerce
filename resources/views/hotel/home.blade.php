@@ -24,10 +24,10 @@ Tidak ada kedatangan untuk pesanan hari ini.
 Tidak ada pesanan yang belum dikonfirmasi
 @endisset
 
-<h2>Pesanan yang Sedang Berlangsung</h2>
+<h2>Pesanan yang Belum Dibayar</h2>
 @isset($pesanan)
     {{-- tampilkan tabel --}}
 @else
-Tidak ada pesanan yang sedang berlangsung
+Tidak ada pesanan yang belum dibayar
 @endisset
 @endsection

@@ -116,6 +116,30 @@ Fasilitas
 @endif
 <br>
 
+Metode Pembayaran
+@if (!$mode_edit)
+    @if(isset($hotel->metode_bayar) && count($hotel->metode_bayar))
+        <ul>
+        @foreach ($hotel->metode_bayar as $item)
+            <li>{{$item->nama_metode}}</li>
+        @endforeach
+        </ul>
+    @else <br> Belum memilih metode bayar
+    @endif
+@else
+    <br>
+    @isset($metode_bayar)
+        @foreach ($metode_bayar as $item)
+            <input type="checkbox" name="metode_bayar[]" id="" value="{{$item->id_metode}}"
+                @if ($hotel->metode_bayar()->find($item->id_metode))
+                    checked
+                @endif
+            > {{$item->nama_metode}}
+        @endforeach
+    @endisset
+@endif
+<br>
+
 {{-- misal ada aturan menginap --}}
 {{-- Aturan Menginap
 <br>
@@ -152,6 +176,9 @@ Deskripsi
                 url: '/userhotel/getdaerahfromkota',
                 type: 'get',
                 dataType: 'json',
+                data : {
+                    kota : $("#cbKota").val()
+                },
                 success:function(res){
                     if(res){
                         $("#cbDaerah").empty();

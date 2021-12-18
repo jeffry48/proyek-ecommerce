@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Kamar;
 use App\KategoriHotel;
 use App\Kota;
+use App\MetodeBayar;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
@@ -164,7 +165,7 @@ class HotelController extends Controller
     }
     public function getDaerahfromKota(Request $request)
     {
-        $id_kota_selected = "KO00000002";
+        $id_kota_selected = "";
         if(isset($request->kota)){
             $id_kota_selected = $request->kota;
         }
@@ -174,12 +175,10 @@ class HotelController extends Controller
     public function viewEditProfil(Request $request)
     {
         $id_hotel = "HO00000003";
+        $metode_bayar = MetodeBayar::select("*");
         $kota = Kota::select("*");
         $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
         $id_kota_selected = $hotel->first()->kotaHotel->id_kota;
-        if(isset($request->kota)){
-            $id_kota_selected = $request->kota;
-        }
         $daerah = Daerah::where("id_kota",$id_kota_selected);
         $fasilitas = FasilitasHotel::select("*");
         return view("hotel.profil.editProfil",[
@@ -187,7 +186,8 @@ class HotelController extends Controller
             "hotel"=>$hotel->first(),
             "fasilitas"=>$fasilitas->get(),
             "kota" => $kota->get(),
-            "daerah" => $daerah->get()
+            "daerah" => $daerah->get(),
+            "metode_bayar" => $metode_bayar->get()
         ]);
     }
     public function simpanEditProfil(Request $request)
@@ -201,6 +201,7 @@ class HotelController extends Controller
         $deskripsi_hotel = $request->deskripsiHotel;
         $arrfasilitas = $request->fasilitas;
         $arrberbayar = $request->berbayar;
+        $arrmetodebayar = $request->metode_bayar;
         try {
             $hotel = Hotel::where("id_hotel",$id_hotel)->first();
             $data_fasilitas = [];
@@ -211,7 +212,13 @@ class HotelController extends Controller
                 ];
             }
             $hotel->fasilitas()->sync($data_fasilitas);
-
+            $data_metode_bayar = [];
+            for ($i=0; $i < count($arrmetodebayar); $i++) {
+                $data_metode_bayar[$arrmetodebayar[$i]]=[
+                    "id_hotel_metode" => "MBH".substr($id_hotel,3).str_pad(($i+1),2,"0",STR_PAD_LEFT)
+                ];
+            }
+            $hotel->metode_bayar()->sync($data_metode_bayar);
             Hotel::where('id_hotel',$id_hotel)->update([
                 "nama_hotel" => $nama_hotel,
                 "no_telp_hotel"=>$no_telp_hotel,
