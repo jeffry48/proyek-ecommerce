@@ -359,4 +359,128 @@ class AdminController extends Controller
         DB::table('kota')->where('id_kota', '=', $idk)->delete();
         return redirect("admin/listKota");
     }
+    public function getAllTrans()
+    {
+        $htrans=DB::select("select * from htrans");
+        return view ('Admin.laporanTrans', ['htrans'=>$htrans]);
+    }
+    public function searchTrans(Request $req)
+    {
+        $tgs=$req->tgs;
+        $tge=$req->tge;
+
+        if($tgs==null){
+            $tgs="2000-01-01";
+        }
+        if($tge==null){
+            $tge="2030-12-31";
+        }
+
+        $htrans=DB::select("select * from htrans where tgl_transaksi between '".$tgs."' and '".$tge."'");
+        return view ('Admin.laporanTrans', ['htrans'=>$htrans]);
+    }
+    public function getAllUserbanyak()
+    {
+        $history=DB::select("select * from dtrans d
+                            join htrans h on h.id_htrans=d.id_htrans
+                            order by h.tgl_transaksi desc");
+        // dd($history);
+        return view ('Admin.laporanHistUser', ['history'=>$history]);
+    }
+    public function searchUserbanyak(Request $req)
+    {
+        $tgs=$req->tgs;
+        $tge=$req->tge;
+
+        if($tgs==null){
+            $tgs="2000-01-01";
+        }
+        if($tge==null){
+            $tge="2030-12-31";
+        }
+
+        $history=DB::select("select h.id_customer from htrans h
+                            join dtrans d on h.id_htrans=d.id_htrans
+                            where h.tgl_transaksi between '".$tgs."' and '".$tge."'
+                            group by id_customer
+                            ORDER BY COUNT(h.id_customer) DESC
+                            LIMIT 1");
+
+        $history2=DB::select("select * from dtrans d
+                            join htrans h on h.id_htrans=d.id_htrans
+                            where h.id_customer='".$history[0]->id_customer."'
+                            order by h.tgl_transaksi desc");
+        return view ('Admin.laporanHistUser', ['history'=>$history2]);
+    }
+    public function getAllpenghasilan()
+    {
+        $penghasilan=DB::select('select * from htrans h
+        join dtrans d on h.id_htrans=d.id_htrans
+        join hotel ho on ho.id_hotel=d.id_hotel
+        join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
+        order by h.tgl_transaksi desc');
+
+        // dd($penghasilan);
+        return view("Admin.laporanPenghasilanPem", ["penghasilan"=>$penghasilan]);
+    }
+    public function searchPengPem(Request $req)
+    {
+        $tgs=$req->tgs;
+        $tge=$req->tge;
+
+        if($tgs==null){
+            $tgs="2000-01-01";
+        }
+        if($tge==null){
+            $tge="2030-12-31";
+        }
+
+        $penghasilan=DB::select("select * from dtrans d
+        join htrans h on h.id_htrans=d.id_htrans
+        join hotel ho on ho.id_hotel=d.id_hotel
+        join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
+        where h.tgl_transaksi between '".$tgs."' and '".$tge."'
+        order by h.tgl_transaksi desc");
+        return view("Admin.laporanPenghasilanPem", ["penghasilan"=>$penghasilan]);
+
+    }
+
+    public function getAllPengPemBanyak()
+    {
+        $penghasilan=DB::select('select * from dtrans d
+        join htrans h on h.id_htrans=d.id_htrans
+        join hotel ho on ho.id_hotel=d.id_hotel
+        join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
+        order by h.tgl_transaksi desc');
+        return view("Admin.laporanPenghasilanPemTerbesar", ["penghasilan"=>$penghasilan]);
+    }
+    public function searchPengPemBanyak(Request $req)
+    {
+        $tgs=$req->tgs;
+        $tge=$req->tge;
+
+        if($tgs==null){
+            $tgs="2000-01-01";
+        }
+        if($tge==null){
+            $tge="2030-12-31";
+        }
+
+        $penghasilan=DB::select('select d.id_hotel from dtrans d
+        join htrans h on h.id_htrans=d.id_htrans
+        join hotel ho on ho.id_hotel=d.id_hotel
+        join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
+        group by d.id_hotel
+        ORDER BY COUNT(d.id_hotel) DESC
+        LIMIT 1');
+
+        $penghasilan2=DB::select('select * from dtrans d
+        join htrans h on h.id_htrans=d.id_htrans
+        join hotel ho on ho.id_hotel=d.id_hotel
+        join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
+        where d.id_hotel="'.$penghasilan[0]->id_hotel.'"
+        order by h.tgl_transaksi desc');
+        // dd($penghasilan2);
+        return view("Admin.laporanPenghasilanPemTerbesar", ["penghasilan"=>$penghasilan2]);
+    }
 }
