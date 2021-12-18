@@ -106,18 +106,6 @@ Route::prefix("admin")->group(function ()
     Route::post('prosesTambahKota', "AdminController@tambahKota");
     Route::get('searchKota', "AdminController@searchKota");
 
-    //laporan
-    Route::get('laporanTrans', "AdminController@getAllTrans");
-    Route::get('searchTrans', "AdminController@searchTrans");
-
-    Route::get('laporanUserBanyak', "AdminController@getAllUserbanyak");
-    Route::get('searchUserbanyak', "AdminController@searchUserbanyak");
-
-    Route::get('laporanPengPem', "AdminController@getAllpenghasilan");
-    Route::get('searchPengPem', "AdminController@searchPengPem");
-
-    Route::get('laporanPengPemBanyak', "AdminController@getAllPengPemBanyak");
-    Route::get('searchPengPemBanyak', "AdminController@searchPengPemBanyak");
 });
 ////////////////////////////////////////////////////////////////////////////
 

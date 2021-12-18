@@ -35,45 +35,17 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List Transaksi</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="listDaerah" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Daerah dan Kota</p>
                                         </a>
                                     </li>
-                                    <br>
-                                    <li class="nav-item">
-                                        <a href="laporanTrans" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Laporan Transaksi</p>
-                                            {{-- tanggal --}}
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="laporanUserBanyak" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Laporan Penginap</p>
-                                            <br>
-                                            <p>Terbanyak</p>
-                                            {{-- tanggal --}}
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="laporanPengPem" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Laporan Penghasilan Pemilik</p>
-                                            {{-- pemilik dan tanggal --}}
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="laporanPengPemBanyak" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Laporan Penghasilan Pemilik</p>
-                                            <br>
-                                            <p> Terbesar</p>
-                                            {{-- tanggal --}}
-                                        </a>
-                                    </li>
-                                    <br>
                                     <li class="nav-item">
                                         <a href="profile" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
