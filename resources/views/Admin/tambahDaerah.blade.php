@@ -13,7 +13,6 @@
         <!-- Theme style -->
         {{-- <link rel="stylesheet" href="./dist/css/adminlte.min.css"> --}}
         <link rel="stylesheet" href="{{ URL::asset('adminlte/dist/css/adminlte.min.css') }}">
-
     </head>
     @if (isset($errMessage))
         <script>
