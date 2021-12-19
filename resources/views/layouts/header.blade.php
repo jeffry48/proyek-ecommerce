@@ -22,7 +22,9 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('images/ico/apple-touch-icon-114-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{asset('images/ico/apple-touch-icon-57-precomposed.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 </head><!--/head-->
+
 
 <body>
 	<header id="header"><!--header-->
@@ -59,7 +61,7 @@
 						<div class="logo pull-left">
 							<a href="index.html"><img src="{{asset('images/home/logo.png')}}" alt="" /></a>
 						</div>
-						<div class="btn-group pull-right">
+						{{-- <div class="btn-group pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									USA
@@ -81,19 +83,17 @@
 									<li><a href="#">Pound</a></li>
 								</ul>
 							</div>
-						</div>
+						</div> --}}
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="{{route('cartKamars')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 @if (session()->get('loggedIn'))
-    								<li><a href="/login"><i class="fa fa-user"></i> Welcome, </a></li>
+    								<li><a href="#"><i class="fa fa-user"></i>Welcome, {{session()->get('loggedIn')->nama_customer}}</a></li>
+                                    <li><a href="{{route('cartKamars')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+    								<li><a href="/logout"><i class="fa fa-lock"></i>Logout</a></li>
                                 @else
-    								<li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
+                                    <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
                                 @endif
 							</ul>
 						</div>
@@ -101,3 +101,4 @@
 				</div>
 			</div>
 		</div><!--/header-middle-->
+
