@@ -483,4 +483,69 @@ class AdminController extends Controller
         // dd($penghasilan2);
         return view("Admin.laporanPenghasilanPemTerbesar", ["penghasilan"=>$penghasilan2]);
     }
+    public function searchCustomer(Request $req)
+    {
+        $username=$req->username;
+        $nama=$req->nama;
+        $noTelp=$req->noTelp;
+        $email=$req->email;
+        $banned=$req->banned;
+        if($username==null){
+            $username="";
+        }
+        if($nama==null){
+            $nama="";
+        }
+        if($noTelp==null){
+            $noTelp="";
+        }
+        if($email==null){
+            $email="";
+        }
+        if($banned==null){
+            $banned="";
+        }
+
+        $searchCust=DB::select('select * from customer where
+                                username_customer like "%'.$username.'%" and
+                                nama_customer like "%'.$nama.'%" and
+                                no_telp_customer like "%'.$noTelp.'%" and
+                                email_customer like "%'.$email.'%" and
+                                ban like "%'.$banned.'%"');
+
+        // dd($searchCust);
+        return view("Admin.listCustomer", ['customers'=>$searchCust]);
+    }
+    public function banCust($idCust)
+    {
+        DB::table('customer')
+            ->where('id_customer', $idCust)
+            ->update(['ban' => 1]);
+            echo "updated";
+        return redirect("admin/detailCust".$idCust);
+    }
+    public function unbanCust($idCust)
+    {
+        DB::table('customer')
+            ->where('id_customer', $idCust)
+            ->update(['ban' => 0]);
+            echo "updated";
+        return redirect("admin/detailCust".$idCust);
+    }
+    public function banPem($idPem)
+    {
+        DB::table('pemilik_hotel')
+        ->where('id_pemilik', $idPem)
+        ->update(['ban' => 1]);
+        echo "updated";
+    return redirect("admin/detailPem".$idPem);
+    }
+    public function unbanPem($idPem)
+    {
+        DB::table('pemilik_hotel')
+        ->where('id_pemilik', $idPem)
+        ->update(['ban' => 0]);
+        echo "updated";
+    return redirect("admin/detailPem".$idPem);
+    }
 }

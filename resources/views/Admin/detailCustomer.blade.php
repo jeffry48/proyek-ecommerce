@@ -80,8 +80,11 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-primary">send Message</button>
-                                <button class="btn" style="background-color: red; color: white; border: solid white 1px">Ban</button>
+                                @if ($currCust[0]->ban==0)
+                                    <a class="btn" href="banCust{{$currCust[0]->id_customer}}" style="background-color: red; color: white; border: solid white 1px">Ban</a>
+                                @elseif ($currCust[0]->ban==1)
+                                    <a class="btn" href="unbanCust{{$currCust[0]->id_customer}}" style="background-color: green; color: white; border: solid white 1px">Unban</a>
+                                @endif
                             </div>
                         </div>
 

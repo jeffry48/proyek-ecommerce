@@ -77,11 +77,16 @@ Route::prefix("admin")->group(function ()
         return redirect("admin/login");
     });
     //pemilik dan customer
-    Route::get('searchPemilik', "AdminController@searchPemilik");
-    Route::get('detailCust{idCust}', "AdminController@getDetailCustomer");
+    Route::get('/searchPemilik', "AdminController@searchPemilik");
+    Route::get('/detailCust{idCust}', "AdminController@getDetailCustomer");
     Route::get('/detailPem{idPem}', "AdminController@getDetailpem");
     Route::get('/listPem', "AdminController@getAllPem");
     Route::get('/listCust', "AdminController@getAllCust");
+    Route::get('/searchCustomer', "AdminController@searchCustomer");
+    Route::get('/banCust{idCust}', "AdminController@banCust");
+    Route::get('/unbanCust{idCust}', "AdminController@unbanCust");
+    Route::get('/banPem{idpem}', "AdminController@banPem");
+    Route::get('/unbanPem{idpem}', "AdminController@unbanPem");
 
     //hotel dan kamar
     Route::get('searchHotel', "AdminController@searchHotel");
