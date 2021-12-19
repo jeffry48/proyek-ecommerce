@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Favourites;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -69,21 +70,21 @@ class user extends Controller
 
         $cekLogin = Customer::where('username_customer',$req->username)
                         ->where('password_customer',$req->password)
-                        ->where('tipe_customer',$jeniscustomer)
+                        ->where('ban',0)
                         ->get();
-
         if($cekLogin->count()>0){
-            if($jeniscustomer==0){
-                session(['loggedIn' => $cekLogin[0]->id_customer]);
-                return redirect('hotel');
-            }else{
-                //ini buat login ke penyewa admin
-
-            }
+            session(['loggedIn' => $cekLogin[0]]);
+            return redirect('hotel');
+            //ini buat login ke penyewa
         }else{
             session(['errMessage' => "username/password salah"]);
             return redirect("login");
         }
+    }
+
+    public function logout(){
+        session()->forget('loggedIn');
+        return redirect('login');
     }
 
     public function getAllFavorite()
@@ -95,5 +96,45 @@ class user extends Controller
         $pemiliks=DB::select('select * from pemilik_hotel');
         // dd($hotels[0]->nama_hotel);
         return view("listFavorite", ['hotels'=>$hotels, 'pemiliks'=>$pemiliks]);
+    }
+
+    public function getProfile(){
+        return view('Customer.profile');
+    }
+
+    public function editProfile(){
+        return view('Customer.editProfile');
+    }
+
+    public function prosesEditProfile(Request $req){
+        $nama = $req->input('nama');
+        $no_telp = $req->input('no_telp');
+        $email = $req->input('email');
+        $id = session()->get('loggedIn')->id_customer;
+
+        $updateProfile = Customer::where('id_customer',$id)->first();
+        $updateProfile->nama_customer = $nama;
+        $updateProfile->no_telp_customer = $no_telp;
+        $updateProfile->email_customer = $email;
+        $updateProfile->save();
+
+        session()->forget('loggedIn');
+        session(['loggedIn' => $updateProfile]);
+
+        return view('Customer.profile');
+    }
+
+    public function getFavourite(){
+        $favs = Favourites::where('id_customer',session()->get('loggedIn')->id_customer)
+                                ->join('hotel','hotel.id_hotel','=','favourites.id_hotel')
+                                ->join('kota','kota.id_kota','=','hotel.Kota')
+                                ->join('daerah','daerah.id_daerah','=','hotel.Daerah')
+                                ->get();
+
+        return view('Customer.favourite', compact('favs'));
+    }
+
+    public function sendLetter(Request $req){
+
     }
 }

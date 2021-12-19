@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>register</title>
+        <title>detail kamar</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -16,35 +16,19 @@
 
     </head>
     <style>
-
+        .custom:hover{
+            background-color: wheat;
+            cursor: pointer;
+        }
+        .row{
+            margin-top: 1%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                    </li>
-                </ul>
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            {{-- <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a> --}}
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header')
             </nav>
             <!-- /.navbar -->
 
@@ -54,7 +38,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarNotLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn')
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -66,7 +50,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Register</h1>
+                                <h1>{{$currKamar[0]->nama_kamar}}</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -78,50 +62,21 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card">
-                                <form action="prosesRegister" method="post">
                                     <div class="card-body">
-                                        @csrf
-                                        <div class="form-group">
-                                            @if (session()->get('message')!=null)
-                                                <div style="color: white; background-color:red">
-                                                    {{session()->get('message')}}
-                                                    {{session()->forget('message')}}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            Username:
-                                            <input type="text" name="username" id="" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            Password:
-                                            <input type="password" name="password" id="" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            Confirm Password:
-                                            <input type="password" name="confirm" id="" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            Nama Lengkap:
-                                            <input type="text" name="nama" id="" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            No Telp:
-                                            <input type="text" name="noTelp" id="" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            email:
-                                            <input type="text" name="email" id="" class="form-control" required>
-                                        </div>
-                                        <input type="radio" name="jenisUser" id="" value="customer" checked="true">customer
-                                        <input type="radio" name="jenisUser" id="" value="pemilik">pemilik
+                                        <h4><a href="detailPem{{$currPem[0]->id_pemilik}}">By: {{$currPem[0]->nama_pemilik}}</a></h4>
                                     </div>
-                                    <div class="card-footer">
-                                        <button class="btn btn-primary">Register</button>
+                                    <div class="card-body">
+                                        <h4><a href="detailHotel{{$currHotel[0]->id_hotel}}">At: {{$currHotel[0]->nama_hotel}}</a></h4>
                                     </div>
-                                </form>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary"><a href="/login" style="color:white">Back to Login</a></button>
+                                    <div class="card-body">
+                                        Jumlah Kamar: {{$currKamar[0]->jumlah_kamar}}
+                                    </div>
+                                    <div class="card-body">
+                                        Harga Kamar: {{$currKamar[0]->harga_kamar}}
+                                    </div>
+                                    <div class="card-body">
+                                        Detail Kamar: {{$currKamar[0]->detail_kamar}}
+                                    </div>
                                 </div>
                             </div>
                         </div>

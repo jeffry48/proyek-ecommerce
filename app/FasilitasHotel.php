@@ -17,4 +17,5 @@ class FasilitasHotel extends Model
         return $this->belongsToMany(Hotel::class,"fas_utk_hotel","id_fasilitas","id_hotel")
         ->withPivot("dikenai_biaya");
     }
+
 }

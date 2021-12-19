@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>list hotel</title>
+        <title>list customer</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -23,29 +23,15 @@
             background-color: wheat;
             cursor: pointer;
         }
+        .row{
+            margin-top: 1%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header');
             </nav>
             <!-- /.navbar -->
 
@@ -55,7 +41,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn')
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -67,12 +53,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <h4>
-                                        Favorite Page
-                                    </h4>
-                                </div>
-                                <h1>List Hotel</h1>
+                                <h1>List Customer</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -83,31 +64,40 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
-                        @if (isset($hotels))
-                            @for ($i = 0; $i < (count($hotels)/3); $i++)
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Search
+                        </button>
+                        <!-- buat search -->
+                        <div class="collapse" id="collapseExample">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form action="">
+                                        <div class="box">
+                                            search:
+                                            <input type="text" name="" id="" class="form-control" placeholder="search">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (isset($customers))
+                            @for ($i = 0; $i < (count($customers)/3); $i++)
                             <div class="row">
                                 @for ($j = 0; $j < 3; $j++)
-                                    @if (isset($hotels[$j+(3*$i)]))
+                                    @if (isset($customers[$j+(3*$i)]))
                                         <div class="col-md-4">
-                                            <div class="card" id="{{$hotels[$j+(3*$i)]->id_hotel}}">
+                                            <div class="card" id="{{$customers[$j+(3*$i)]->id_customer}}">
                                                 <div class="card-header">
-                                                    {{$hotels[$j+(3*$i)]->nama_hotel}}
+                                                    {{$customers[$j+(3*$i)]->nama_customer}}
                                                 </div>
                                                 <div class="card-body">
-                                                    <div class="pic">
-                                                        <img src="" alt="">
-                                                    </div>
                                                     <div class="detailHotel">
-                                                        @for ($k = 0; $k < count($pemiliks); $k++)
-                                                            @if ($pemiliks[$k]->id_pemilik==$hotels[$j+(3*$i)]->id_pemilik)
-                                                                <?php $currPem=$pemiliks[$k];?>
-                                                            @endif
-                                                        @endfor
-                                                        by: {{$currPem->nama_pemilik}}
+                                                        id: {{$customers[$j+(3*$i)]->id_customer}}
                                                         <br>
-                                                        {{$hotels[$j+(3*$i)]->alamat_hotel}}
+                                                        username: {{$customers[$j+(3*$i)]->username_customer}}
                                                         <br>
-                                                        no telp: {{$hotels[$j+(3*$i)]->no_telp_hotel}}
+                                                        no telp: {{$customers[$j+(3*$i)]->no_telp_customer}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -156,7 +146,7 @@
                 bsCustomFileInput.init();
             });
             $('.card').click(function() {
-                window.location.href="detailHotel"+$(this).attr('id');
+                window.location.href="detailCust"+$(this).attr('id');
             });
         </script>
     </body>

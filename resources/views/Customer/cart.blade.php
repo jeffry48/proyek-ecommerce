@@ -1,6 +1,42 @@
 @extends('layouts.index')
 
 @section('center')
+
+<div class="header-bottom"><!--header-bottom-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="mainmenu pull-left">
+                    <ul class="nav navbar-nav collapse navbar-collapse">
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="/hotel" class="active">Hotel</a></li>
+                        @if (session()->get('loggedIn'))
+                            <li class="dropdown"><a href="#">Account<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    <li><a href="/profile">My Profile</a></li>
+                                    <li><a href="/favourite">My Favourite</a></li>
+                                    <li><a href="#">My History</a></li>
+                                </ul>
+                            </li>
+                        @endif
+
+                        <li><a href="contact-us.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--/header-bottom-->
+</header><!--/header-->
+
 <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -13,8 +49,8 @@
             <table class="table table-condensed">
                 <thead>
                     <tr class="cart_menu">
-                        <td class="image">Item</td>
-                        <td class="description"></td>
+                        <td></td>
+                        <td class="image">Item</td>\
                         <td class="price">Price</td>
                         <td class="quantity">Quantity</td>
                         <td class="total">Total</td>
@@ -24,16 +60,15 @@
                 <tbody>
                     @foreach ($cartItems as $item)
                         <tr>
+                            <td><input type="radio" name="id_cart" value="{{$item->id_cart}}"></td>
                             <td class="cart_product">
-                                <a href=""><img src="{{Storage::disk('local')->url('kamar_images/'.$item->gambar_kamar)}}" style="width:125px;height:125px" alt=""></a>
-                            </td>
-                            <td class="cart_description">
                                 <h4>{{$item->nama_hotel}} berjenis kamar {{$item->nama_kamar}}</h4>
                                 <p>Tanggal {{$item->tgl_checkin}} sampai {{$item->tgl_checkout}}</p>
                             </td>
                             <td class="cart_price">{{$item->harga_kamar}}</td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
+
                                     <a class="cart_quantity_down" href="{{route('minJumlah',['id'=>$item->id_cart])}}"> - </a>
                                     <input class="cart_quantity_input" type="text" name="quantity" value="{{$item->jumlah_kamar_pesan}}" autocomplete="off" size="2">
                                     <a class="cart_quantity_up" href="{{route('plusJumlah',['id'=>$item->id_cart])}}"> + </a>
@@ -57,72 +92,15 @@
 
 <section id="do_action">
     <div class="container">
-        <div class="heading">
-            <h3>What would you like to do next?</h3>
-            <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-        </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="chose_area">
-                    <ul class="user_option">
-                        <li>
-                            <input type="checkbox">
-                            <label>Use Coupon Code</label>
-                        </li>
-                        <li>
-                            <input type="checkbox">
-                            <label>Use Gift Voucher</label>
-                        </li>
-                        <li>
-                            <input type="checkbox">
-                            <label>Estimate Shipping & Taxes</label>
-                        </li>
-                    </ul>
-                    <ul class="user_info">
-                        <li class="single_field">
-                            <label>Country:</label>
-                            <select>
-                                <option>United States</option>
-                                <option>Bangladesh</option>
-                                <option>UK</option>
-                                <option>India</option>
-                                <option>Pakistan</option>
-                                <option>Ucrane</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-
-                        </li>
-                        <li class="single_field">
-                            <label>Region / State:</label>
-                            <select>
-                                <option>Select</option>
-                                <option>Dhaka</option>
-                                <option>London</option>
-                                <option>Dillih</option>
-                                <option>Lahore</option>
-                                <option>Alaska</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-
-                        </li>
-                        <li class="single_field zip-field">
-                            <label>Zip Code:</label>
-                            <input type="text">
-                        </li>
-                    </ul>
-                    <a class="btn btn-default update" href="">Get Quotes</a>
-                    <a class="btn btn-default check_out" href="">Continue</a>
-                </div>
             </div>
             <div class="col-sm-6">
                 <div class="total_area">
                     <ul>
                         <li>Total <span>{{$total}}</span></li>
                     </ul>
-                        <a class="btn btn-default update" href="">Update</a>
-                        <a class="btn btn-default check_out" href="">Check Out</a>
+                    <a class="btn btn-default check_out" href="">Check Out</a>
                 </div>
             </div>
         </div>
