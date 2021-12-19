@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>detail hotel</title>
+        <title>register</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -54,7 +54,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarNotLoggedIn');
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -66,27 +66,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>{{$currHotel[0]->nama_hotel}}</h1>
-                                <br>
-                                <?php
-                                    use Illuminate\Support\Facades\DB;
-                                    $checkFav=DB::select('select * from favorite where id_kategori="'.$currHotel[0]->id_kategori.'"
-                                    and id_hotel="'.$currHotel[0]->id_hotel.'" and id_customer="'.session()->get('loggedIn').'"')
-                                ?>
-                                @if (count($checkFav)>0)
-                                    <form action="removeFavorite">
-                                        <input type="hidden" name="idHotel" value="{{$currHotel[0]->id_hotel}}">
-                                        <input type="hidden" name="idKategori" value="{{$currHotel[0]->id_kategori}}">
-                                        <button type="submit" class="btn" id="removeFavBtn" style="background-color: red; color: white">Remove Favorite</button>
-                                    </form>
-                                @else
-                                    <form action="addFavorite">
-                                        <input type="hidden" name="idHotel" value="{{$currHotel[0]->id_hotel}}">
-                                        <input type="hidden" name="idKategori" value="{{$currHotel[0]->id_kategori}}">
-                                        <button type="submit" class="btn" id="favBtn" style="background-color: lightpink;">Add to Favorite</button>
-                                    </form>
-                                @endif
-
+                                <h1>Register</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -98,33 +78,50 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card">
-                                    @for ($k = 0; $k < count($pemiliks); $k++)
-                                        @if ($pemiliks[$k]->id_pemilik==$currHotel[0]->id_pemilik)
-                                            <?php $currPem=$pemiliks[$k];?>
-                                        @endif
-                                    @endfor
+                                <form action="prosesRegister" method="post">
                                     <div class="card-body">
-                                        <h4>by: {{$currPem->nama_pemilik}}</h4>
+                                        @csrf
+                                        <div class="form-group">
+                                            @if (session()->get('message')!=null)
+                                                <div style="color: white; background-color:red">
+                                                    {{session()->get('message')}}
+                                                    {{session()->forget('message')}}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            Username:
+                                            <input type="text" name="username" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            Password:
+                                            <input type="password" name="password" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            Confirm Password:
+                                            <input type="password" name="confirm" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            Nama Lengkap:
+                                            <input type="text" name="nama" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            No Telp:
+                                            <input type="text" name="noTelp" id="" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            email:
+                                            <input type="text" name="email" id="" class="form-control" required>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        alamat: {{$currHotel[0]->alamat_hotel}}
+                                    <div class="card-footer">
+                                        <button class="btn btn-primary">Register</button>
                                     </div>
-                                    <div class="card-body">
-                                        telp: {{$currHotel[0]->no_telp_hotel}}
-                                    </div>
-                                    <div class="card-body">
-                                        jumlah kamar: {{$currHotel[0]->jumlah_kamar}}
-                                    </div>
-                                    <div class="card-body">
-                                        harga kamar: {{$currHotel[0]->no_telp_hotel}}
-                                    </div>
+                                </form>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary"><a href="/login" style="color:white">Back to Login</a></button>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-primary" id="pesanBtn">Pesan Hotel</button>
-                                <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
-                            </div>
-
                         </div>
                         <!-- /.row -->
                     </div><!-- /.container-fluid -->
@@ -163,9 +160,6 @@
         <script>
             $(function () {
                 bsCustomFileInput.init();
-            });
-            $('.pesanBtn').click(function() {
-                window.location.href="pemesanan"+$(this).attr('');
             });
         </script>
     </body>
