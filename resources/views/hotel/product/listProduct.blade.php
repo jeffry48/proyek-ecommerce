@@ -2,28 +2,28 @@
 @section('content')
 <h1>LIST PRODUCT</h1>
 <form action="/userhotel/product" method="get">
-    Filter :
+    {{-- Filter :
     <select name="filter">
         <option value="all">Semua kamar</option>
         <option value="promo">Kamar yang promo</option>
         <option value="available">Kamar yang tersedia</option>
         <option value="unavailable">Kamar yang tidak tersedia</option>
-    </select>
+    </select> --}}
 </form>
 <br>
 <form action="/userhotel/product/tambah" method="get">
-    <button type="submit" name="btnTambah">Tambah Kamar</button>
+    <button class="btn btn-secondary" type="submit" name="btnTambah">Tambah Kamar</button>
 </form>
 <br><br>
 @isset($products)
-<table border="1px solid black">
-    <tr>
+<table border="1px solid black" class="table table-sm table-bordered">
+    <thead class="table-light">
         <th>Nama Kamar</th>
         <th>Harga</th>
         <th>Jumlah kamar</th>
         <th>Detail</th>
         <th>Hapus</th>
-    </tr>
+    </thead>
     @foreach ($products as $product)
         <tr>
             <td>{{$product->nama_kamar}} </td>
@@ -31,13 +31,13 @@
             <td>{{$product->jumlah_kamar}}</td>
             <td>
                 <form action="/userhotel/product/{{$product->id_kategori}}" method="get">
-                    <button name="btnDetail">Detail</button>
+                    <button class="btn btn-secondary" name="btnDetail">Detail</button>
                 </form>
             </td>
             <td>
                 <form action="/userhotel/product/hapus" id="formHapus" method="post">
                     @csrf
-                    <button name="btnHapus" id="btnHapusProduct" value="{{$product->id_kategori}}">Hapus</button>
+                    <button name="btnHapus" class="btn btn-danger" id="btnHapusProduct" value="{{$product->id_kategori}}">Hapus</button>
                 </form>
                 <script>
                     $(document).on('click', '#btnHapusProduct', function (event) {

@@ -23,6 +23,11 @@ class Hotel extends Model
         return $this->belongsTo(Kota::class,"Kota","id_kota");
     }
 
+    public function htransHotel()
+    {
+        return $this->hasMany(HTrans::class);
+    }
+
     public function daerahHotel()
     {
         return $this->belongsTo(Daerah::class,"Daerah","id_daerah");

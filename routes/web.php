@@ -140,16 +140,12 @@ Route::prefix("admin")->group(function ()
 Route::prefix("userhotel")->group(function ()
 {
     Route::get('/getdaerahfromkota',"Hotel\HotelController@getDaerahfromKota");
+    //Route::get('/getkotafromdaerah',"Hotel\HotelController@getKotafromDaerah");
 
     Route::get('/','Hotel\HotelController@viewHome');
     Route::prefix("transaksi")->group(function (){
         Route::get('/',"Hotel\HotelController@viewListTransaksi");
-        Route::get('/{id}',"Hotel\HotelController@viewDetailTransaksi");
-    });
-    Route::prefix("promo")->group(function (){
-        Route::get('/',"Hotel\HotelController@viewListPromo");
-        Route::get('/{id}',"Hotel\HotelController@viewDetailPromo");
-        Route::get('/tambah',"Hotel\HotelController@viewTambahPromo");
+        Route::post('/detail',"Hotel\HotelController@viewDetailTransaksi");
     });
     Route::prefix("profil")->group(function (){
         Route::get('/',"Hotel\HotelController@viewProfil");

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hotel;
 use App\Daerah;
 use App\FasilitasHotel;
 use App\Hotel;
+use App\HTrans;
 use App\Http\Controllers\Controller;
 use App\Kamar;
 use App\KategoriHotel;
@@ -25,6 +26,14 @@ class HotelController extends Controller
             "nama_hotel" => $nama_hotel,
             "adminhotel" => $admin_hotel
         ]);
+    }
+
+    public function getTransaksiDatangToday(Request $request)
+    {
+        $id_hotel = "HO00000003";
+        $today = date("Y-m-d");
+        $htrans_hotel = HTrans::select("id_hotel",$id_hotel)->get();
+        $dtrans_checkin_today = $htrans_hotel->dtrans()->where("tgl_checkin",$today)->get();
     }
     //--HOME
 
@@ -125,33 +134,24 @@ class HotelController extends Controller
     //--PRODUCT
 
     //TRANSAKSI--
-    public function viewListTransaksi()
+    public function viewListTransaksi(Request $request)
     {
-        return view("hotel.transaksi.listTransaksi");
+        $id_hotel = "HO00000003";
+        $htrans = HTrans::select("*")->where("id_hotel",$id_hotel);
+        return view("hotel.transaksi.listTransaksi",[
+            "htrans" => $htrans->get()
+        ]);
     }
 
-    public function viewDetailTransaksi($id,Request $request)
+    public function viewDetailTransaksi(Request $request)
     {
-        return view("hotel.transaksi.detailTransaksi");
+        $id_htrans = $request->id_htrans;
+        $htrans = HTrans::select("*")->where("id_htrans",$id_htrans);
+        return view("hotel.transaksi.detailTransaksi",[
+            "htrans" => $htrans->first()
+        ]);
     }
     //--TRANSAKSI
-
-    //PROMO--
-    public function viewListPromo()
-    {
-        return view("hotel.promo.listPromo");
-    }
-
-    public function viewDetailPromo($id,Request $request)
-    {
-        return view("hotel.promo.detailPromo");
-    }
-
-    public function viewTambahPromo()
-    {
-        return view("hotel.promo.tambahPromo");
-    }
-    //--PROMO
 
     //PROFIL--
     public function viewProfil()
@@ -172,6 +172,15 @@ class HotelController extends Controller
         $daerah = Daerah::where("id_kota",$id_kota_selected)->pluck("id_daerah","nama_daerah");
         return response()->json($daerah);
     }
+    // public function getKotafromDaerah(Request $request)
+    // {
+    //     $id_daerah_selected = "";
+    //     if(isset($request->daerah)){
+    //         $id_daerah_selected = $request->daerah;
+    //     }
+    //     $kota = Daerah::where("id_daerah",$id_daerah_selected)->kota->pluck("id_kota","nama_kota");
+    //     return response()->json($kota);
+    // }
     public function viewEditProfil(Request $request)
     {
         $id_hotel = "HO00000003";
