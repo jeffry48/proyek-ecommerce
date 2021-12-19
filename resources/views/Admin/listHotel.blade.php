@@ -23,29 +23,18 @@
             background-color: wheat;
             cursor: pointer;
         }
+        .row{
+            margin-top: 1%;
+        }
+        .inputBox{
+            margin-top: 1%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header');
             </nav>
             <!-- /.navbar -->
 
@@ -55,7 +44,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn')
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -69,7 +58,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <h4>
-                                        Favorite Page
+                                        <?php
+                                            use Illuminate\Support\Facades\DB;
+                                            $checkUser=DB::select('select * from admin where id_admin="'.session()->get('loggedIn').'"');
+                                        ?>
+                                        @isset($checkUser[0]->nama_admin)
+                                            Welcome, {{$checkUser[0]->nama_admin}}
+                                        @endisset
                                     </h4>
                                 </div>
                                 <h1>List Hotel</h1>
@@ -83,6 +78,76 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Search
+                        </button>
+                        <!-- buat search -->
+                        <div class="collapse" id="collapseExample">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form action="searchHotel" method="get">
+                                        <div class="box">
+                                            <div class="col-sm-6" style="float: left">
+                                                <div class="inputBox">
+                                                    nama hotel:
+                                                    <input type="text" name="nama" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    pemilik:
+                                                    <input type="text" name="pemilik" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    review start:
+                                                    <input type="text" name="revS" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    review end:
+                                                    <input type="text" name="revE" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    daerah:
+                                                    <input type="text" name="daerah" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    kota:
+                                                    <input type="text" name="kota" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    no telp:
+                                                    <input type="text" name="noTelp" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    <button class="btn btn-primary">search hotel</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="float: left">
+                                                <div class="inputBox">
+                                                    nama kamar:
+                                                    <input type="text" name="namaKamar" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    jumlah kamar start:
+                                                    <input type="text" name="jumKS" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    jumlah kamar end:
+                                                    <input type="text" name="jumKE" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    harga kamar start:
+                                                    <input type="text" name="hargaKS" id="" class="form-control" placeholder="">
+                                                </div>
+                                                <div class="inputBox">
+                                                    harga kamar end:
+                                                    <input type="text" name="hargaKE" id="" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         @if (isset($hotels))
                             @for ($i = 0; $i < (count($hotels)/3); $i++)
                             <div class="row">

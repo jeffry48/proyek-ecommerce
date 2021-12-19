@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>list hotel</title>
+        <title>list pemilik</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -26,29 +26,15 @@
         .row{
             margin-top: 1%;
         }
+        .inputBox{
+            margin-top: 1%;
+        }
     </style>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fa fa-key"></i> Logout
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                @include('Admin.Includes.header')
             </nav>
             <!-- /.navbar -->
 
@@ -58,7 +44,7 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    @include('sidebarLoggedIn');
+                    @include('Admin.Includes.sidebarLoggedIn');
                 </div>
                 <!-- /.sidebar -->
             </aside>
@@ -70,16 +56,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <h4>
-                                        <?php
-                                            use Illuminate\Support\Facades\DB;
-                                            $checkFav=DB::select('select * from customer where id_customer="'.session()->get('loggedIn').'"');
-                                        ?>
-                                        Welcome, {{$checkFav[0]->nama_customer}}
-                                    </h4>
-                                </div>
-                                <h1>List Hotel</h1>
+                                <h1>List Pemilik</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -97,41 +74,56 @@
                         <div class="collapse" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <form action="">
-                                        <div class="box">
-                                            search:
-                                            <input type="text" name="" id="" class="form-control" placeholder="search">
+                                    <form action="searchPemilik">
+                                        <div class="inputBox">
+                                            nama pemilik:
+                                            <input type="text" name="nama" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            username:
+                                            <input type="text" name="username" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            no telp pemilik:
+                                            <input type="text" name="noTelp" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            email pemilik:
+                                            <input type="text" name="email" id="" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="inputBox">
+                                            banned:
+                                            <select name="banned" id="" class="form-control">
+                                                <option value="">All</option>
+                                                <option value="0">Not Banned</option>
+                                                <option value="1">Banned</option>
+                                            </select>
+                                        </div>
+                                        <div class="inputBox">
+                                            <button class="btn btn-primary">Search Pemilik</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        @if (isset($hotels))
-                            @for ($i = 0; $i < (count($hotels)/3); $i++)
+                        @if (isset($pemiliks))
+                            @for ($i = 0; $i < (count($pemiliks)/3); $i++)
                             <div class="row">
                                 @for ($j = 0; $j < 3; $j++)
-                                    @if (isset($hotels[$j+(3*$i)]))
+                                    @if (isset($pemiliks[$j+(3*$i)]))
                                         <div class="col-md-4">
-                                            <div class="card" id="{{$hotels[$j+(3*$i)]->id_hotel}}">
+                                            <div class="card" id="{{$pemiliks[$j+(3*$i)]->id_pemilik}}">
                                                 <div class="card-header">
-                                                    {{$hotels[$j+(3*$i)]->nama_hotel}}
+                                                    {{$pemiliks[$j+(3*$i)]->nama_pemilik}}
                                                 </div>
                                                 <div class="card-body">
-                                                    <div class="pic">
-                                                        <img src="" alt="">
-                                                    </div>
                                                     <div class="detailHotel">
-                                                        @for ($k = 0; $k < count($pemiliks); $k++)
-                                                            @if ($pemiliks[$k]->id_pemilik==$hotels[$j+(3*$i)]->id_pemilik)
-                                                                <?php $currPem=$pemiliks[$k];?>
-                                                            @endif
-                                                        @endfor
-                                                        by: {{$currPem->nama_pemilik}}
+                                                        id: {{$pemiliks[$j+(3*$i)]->id_pemilik}}
                                                         <br>
-                                                        {{$hotels[$j+(3*$i)]->alamat_hotel}}
+                                                        username: {{$pemiliks[$j+(3*$i)]->username_pemilik}}
                                                         <br>
-                                                        no telp: {{$hotels[$j+(3*$i)]->no_telp_hotel}}
+                                                        no telp: {{$pemiliks[$j+(3*$i)]->no_telp_pemilik}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -180,7 +172,7 @@
                 bsCustomFileInput.init();
             });
             $('.card').click(function() {
-                window.location.href="detailHotel"+$(this).attr('id');
+                window.location.href="detailPem"+$(this).attr('id');
             });
         </script>
     </body>
