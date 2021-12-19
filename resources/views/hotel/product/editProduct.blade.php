@@ -5,7 +5,9 @@
         @csrf
         @include('hotel.product.isiDetailProduct')
         <br>
-        <button type="submit" name="btnSimpan" id="btnSave" value="{{$kamar->id_kategori}}">Simpan</button>
+        <div class="row justify-content-end"  style="margin-right: 20px;">
+            <button type="submit" class="btn btn-secondary" name="btnSimpan" id="btnSave" value="{{$kamar->id_kategori}}">Simpan</button>
+        </div>
     </form>
     <script>
         $(document).ready(function () {
