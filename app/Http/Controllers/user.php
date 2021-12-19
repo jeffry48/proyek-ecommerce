@@ -70,17 +70,12 @@ class user extends Controller
 
         $cekLogin = Customer::where('username_customer',$req->username)
                         ->where('password_customer',$req->password)
-                        ->where('tipe_customer',$jeniscustomer)
+                        ->where('ban',0)
                         ->get();
-
         if($cekLogin->count()>0){
-            if($jeniscustomer==0){
-                session(['loggedIn' => $cekLogin[0]]);
-                return redirect('hotel');
-            }else{
-                //ini buat login ke penyewa
-
-            }
+            session(['loggedIn' => $cekLogin[0]]);
+            return redirect('hotel');
+            //ini buat login ke penyewa
         }else{
             session(['errMessage' => "username/password salah"]);
             return redirect("login");

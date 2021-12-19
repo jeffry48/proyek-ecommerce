@@ -45,7 +45,7 @@ Route::get('/register', function () {
 });
 Route::post('/prosesRegister', "user@register");
 Route::get('/login', function () {
-    return view('login');
+    return view('hotel.login');
 });
 Route::post('/prosesLogin', "user@login");
 Route::get('/listHotel', "hotels@getAllHotels");

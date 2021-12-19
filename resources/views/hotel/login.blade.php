@@ -105,6 +105,7 @@
                                                 <button class="btn btn-primary">Login</button>
                                             </div>
                                         </form>
+                                        Belum punya akun?? <a href="/register">klik disini!</a>
                                     </div>
                                 </div>
                             </div>
