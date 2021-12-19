@@ -60,7 +60,7 @@
                                     <h4>
                                         <?php
                                             use Illuminate\Support\Facades\DB;
-                                            $checkUser=DB::select('select * from admin where id_admin="'.session()->get('loggedIn').'"');
+                                            $checkUser=DB::select('select * from admin where id_admin="'.session()->get('loggedInAdmin').'"');
                                         ?>
                                         @isset($checkUser[0]->nama_admin)
                                             Welcome, {{$checkUser[0]->nama_admin}}

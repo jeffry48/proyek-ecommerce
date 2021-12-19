@@ -68,7 +68,7 @@
                                             @endif
                                         </div>
                                         <?php
-                                            $currAdmin=DB::select('select * from admin where id_admin="'.session()->get("loggedIn").'"');
+                                            $currAdmin=DB::select('select * from admin where id_admin="'.session()->get("loggedInAdmin").'"');
                                         ?>
                                         <div class="form-group">
                                             Username:

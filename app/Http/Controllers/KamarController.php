@@ -115,7 +115,7 @@ class KamarController extends Controller
         $updateCart->jumlah_kamar_pesan = $updateCart->jumlah_kamar_pesan-1;
         $updateCart->save();
 
-        $cart = Cart::where('id_customer',"guest001")
+        $cart = Cart::where('id_customer',session()->get('loggedIn')->id_customer)
             ->join('kategori_hotel','kategori_hotel.id_kategori','=','cart.id_kamar')
             ->join('hotel','hotel.id_hotel','=','kategori_hotel.id_hotel')
             ->get();
@@ -135,7 +135,7 @@ class KamarController extends Controller
         $updateCart->jumlah_kamar_pesan = $updateCart->jumlah_kamar_pesan+1;
         $updateCart->save();
 
-        $cart = Cart::where('id_customer',"guest001")
+        $cart = Cart::where('id_customer',session()->get('loggedIn')->id_customer)
             ->join('kategori_hotel','kategori_hotel.id_kategori','=','cart.id_kamar')
             ->join('hotel','hotel.id_hotel','=','kategori_hotel.id_hotel')
             ->get();
@@ -152,7 +152,7 @@ class KamarController extends Controller
         $cart = Cart::where('id_cart',$id);
         $cart->delete();
 
-        $cart = Cart::where('id_customer',"guest001")
+        $cart = Cart::where('id_customer',session()->get('loggedIn')->id_customer)
         ->join('kategori_hotel','kategori_hotel.id_kategori','=','cart.id_kamar')
         ->join('hotel','hotel.id_hotel','=','kategori_hotel.id_hotel')
         ->get();

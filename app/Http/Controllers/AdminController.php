@@ -42,7 +42,7 @@ class AdminController extends Controller
         $cekLogin=DB::select('select * from admin where username_admin="'.$req->username.'" and
         password_admin="'.$req->password.'"');
         if (count($cekLogin)>0) {
-            session(['loggedIn' => $cekLogin[0]->id_admin]);
+            session(['loggedInAdmin' => $cekLogin[0]->id_admin]);
             return redirect("admin/listHotel");
         }
         else{
@@ -93,7 +93,7 @@ class AdminController extends Controller
         DB::update('update admin set username_admin = "'.$username.'",
         password_admin = "'.$pass.'",
         nama_admin = "'.$nama.'",
-        no_telp_admin = "'.$telp.'"  where id_admin = ?', [session()->get("loggedIn")]);
+        no_telp_admin = "'.$telp.'"  where id_admin = ?', [session()->get("loggedInAdmin")]);
         return redirect("admin/profile");
     }
     public function getDetailKamar($idKamar)
