@@ -16,7 +16,7 @@
                 </div>
                 <div class="mainmenu pull-left">
                     <ul class="nav navbar-nav collapse navbar-collapse">
-                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="/customerHome" class="active">Home</a></li>
                         <li><a href="/hotel" class="active">Hotel</a></li>
                         @if (session()->get('loggedIn'))
                             <li class="dropdown"><a href="#">Account<i class="fa fa-angle-down"></i></a>
@@ -144,6 +144,26 @@
                                         </div>
                                     </div>
                                 @endfor
+
+                            @else
+                                @foreach ($reviews as $review)
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <h4>{{$review->nama_customer}}</h4>
+                                                <div>
+                                                @for ($j=0; $j<$review->rating; $j+=1)
+                                                    <img style="width:30px;height:30px" src="{{asset('images/home/bintang.jpg')}}" alt="">
+                                                @endfor
+                                                </div>
+                                                <p>{{$review->detail_review}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+
                             @endif
 
                         </div>

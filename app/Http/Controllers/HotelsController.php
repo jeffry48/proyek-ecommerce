@@ -49,54 +49,56 @@ class HotelsController extends Controller
     public function filterFasilitas(Request $req){
         $ada = false;
         $hotels = Hotel::where('bintang','>',0)
-                        ->join('fas_utk_hotel','fas_utk_hotel.id_hotel','=','hotel.id_hotel');
+                        ->join('fas_utk_hotel','fas_utk_hotel.id_hotel','=','hotel.id_hotel')
+                        ->join('kategori_hotel','kategori_hotel.id_hotel','=','hotel.id_hotel');
         if($req->input('1')){
-            $hotels = $hotels->where('id_fasilitas','1');
+            $hotels = $hotels->orwhere('id_fasilitas','1');
             $ada = true;
         }
         if($req->input('2')){
-            $hotels = $hotels->where('id_fasilitas','2');
+            $hotels = $hotels->orwhere('id_fasilitas','2');
             $ada = true;
         }
         if($req->input('3')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','3');
+            $hotels = $hotels->orwhere('id_fasilitas','3');
         }
         if($req->input('4')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','4');
+            $hotels = $hotels->orwhere('id_fasilitas','4');
         }
         if($req->input('5')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','5');
+            $hotels = $hotels->orwhere('id_fasilitas','5');
         }
         if($req->input('6')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','6');
+            $hotels = $hotels->orwhere('id_fasilitas','6');
         }
         if($req->input('7')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','7');
+            $hotels = $hotels->orwhere('id_fasilitas','7');
         }
         if($req->input('8')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','8');
+            $hotels = $hotels->orwhere('id_fasilitas','8');
         }
         if($req->input('9')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','9');
+            $hotels = $hotels->orwhere('id_fasilitas','9');
         }
         if($req->input('10')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','10');
+            $hotels = $hotels->orwhere('id_fasilitas','10');
         }
         if($req->input('11')){
             $ada = true;
-            $hotels = $hotels->where('id_fasilitas','11');
+            $hotels = $hotels->orwhere('id_fasilitas','11');
         }
 
         if($ada){
             $hotels = $hotels->get();
+            $hotels = $hotels->unique();
         }else{
             $hotels = Hotel::all();
         }

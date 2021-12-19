@@ -16,7 +16,7 @@
                 </div>
                 <div class="mainmenu pull-left">
                     <ul class="nav navbar-nav collapse navbar-collapse">
-                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="/customerHome" class="active">Home</a></li>
                         <li><a href="/hotel" class="active">Hotel</a></li>
                         @if (session()->get('loggedIn'))
                             <li class="dropdown"><a href="#">Account<i class="fa fa-angle-down"></i></a>
@@ -139,31 +139,32 @@
                     </div><!--/category-products-->
                 @endif
 
-                <div class="brands_products"><!--brands_products-->
-                    <h2>Mengandung Fasilitas</h2>
-                    <div class="brands-name">
-                        <ul class="nav nav-pills nav-stacked">
-                            <form action="/filterFasilitas" method="post">
-                                @csrf
-                                @foreach ($fasilitass as $fasilitas)
-                                    <li><input type="checkbox" name="{{$fasilitas->id_fasilitas}}" value="{{$fasilitas->id_fasilitas}}" id="">  {{$fasilitas->nama_fasilitas}}</li>
-                                @endforeach
+                <form action="/filterFasilitas" method="post">
 
-                        </ul>
-                    </div>
-                    <h2>Review</h2>
-                    <div class="brands-name">
-                        <ul class="nav nav-pills nav-stacked">
-                                @csrf
-                                Rating Start: <input type="text" name="" id="">
-                                Rating End: <input type="text" name="" id="">
-                                <center> <input type="submit" value="filters"> <center>
-                            </form>
+                    <div class="brands_products"><!--brands_products-->
+                        <h2>Mengandung Fasilitas</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                    @csrf
+                                    @foreach ($fasilitass as $fasilitas)
+                                        <li><input type="checkbox" name="{{$fasilitas->id_fasilitas}}" value="{{$fasilitas->id_fasilitas}}" id="">  {{$fasilitas->nama_fasilitas}}</li>
+                                    @endforeach
+                            </ul>
+                            <center>
+                                <input type="submit" value="Filter">
+                            </center>
 
-                        </ul>
-                    </div>
-                </div><!--/brands_products-->
-
+                        </div>
+                        <div class="price-range"><!--price-range-->
+							<h2>Jarak Harga</h2>
+							<div class="well">
+								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="500000" data-slider-step="5000" data-slider-value="[5000,100000]" id="sl2" ><br />
+								 <b>Rp 0</b> <b class="pull-right">Rp 500000</b>
+							</div>
+						</div><!--/price-range-->
+                    </div><!--/brands_products-->
+                    <br><br>
+                </form>
             </div>
         </div>
 

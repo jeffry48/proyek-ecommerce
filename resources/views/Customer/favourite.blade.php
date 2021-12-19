@@ -15,7 +15,7 @@
                 </div>
                 <div class="mainmenu pull-left">
                     <ul class="nav navbar-nav collapse navbar-collapse">
-                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="/customerHome" class="active">Home</a></li>
                         <li><a href="/hotel" class="active">Hotel</a></li>
                         <li class="dropdown"><a href="#">Account<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
@@ -43,13 +43,13 @@
     <center>
         <div class="container">
             <h3>List Favourite Hotel</h3>
-            <table style="border:1px solid black">
-                <tr>
+            <table style="border:1px solid black" class="table table-sm table-bordered">
+                <thead class="table-light">
                     <th style="border:1px solid black">Nama Hotel</th>
                     <th style="border:1px solid black">Alamat Hotel</th>
                     <th style="border:1px solid black">Bintang</th>
                     <th></th>
-                </tr>
+                </thead>
                 @foreach ($favs as $fav)
                     <tr>
                         <td style="border:1px solid black">{{$fav->nama_hotel}}</td>
