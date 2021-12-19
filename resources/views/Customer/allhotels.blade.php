@@ -148,6 +148,15 @@
                                 @foreach ($fasilitass as $fasilitas)
                                     <li><input type="checkbox" name="{{$fasilitas->id_fasilitas}}" value="{{$fasilitas->id_fasilitas}}" id="">  {{$fasilitas->nama_fasilitas}}</li>
                                 @endforeach
+
+                        </ul>
+                    </div>
+                    <h2>Review</h2>
+                    <div class="brands-name">
+                        <ul class="nav nav-pills nav-stacked">
+                                @csrf
+                                Rating Start: <input type="text" name="" id="">
+                                Rating End: <input type="text" name="" id="">
                                 <center> <input type="submit" value="filters"> <center>
                             </form>
 
