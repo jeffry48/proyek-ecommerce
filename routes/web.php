@@ -38,6 +38,7 @@ Route::post('/filterFasilitas','HotelsController@filterFasilitas');
 Route::post('/searchHotel','HotelsController@searchHotel');
 Route::post('/addReview','KamarController@addReview');
 Route::post('/sendLetter', 'user@sendLetter');
+Route::get('/customerHome','CustomerHomeCtroller@index');
 
 //----------------------------------//
 Route::get('/register', function () {

@@ -29,7 +29,9 @@ class KamarController extends Controller
         foreach ($reviews as $review) {
             $rating += $review->rating;
         }
-        $rating = $rating/$reviews->count();
+        if($reviews->count()>0){
+            $rating = $rating/$reviews->count();
+        }
 
         return view("Customer.allkamars", compact("hotel","kamars","fasilitass","rating","reviews"));
     }
@@ -62,7 +64,7 @@ class KamarController extends Controller
         $cart = Cart::where('id_kamar',$id)->where('tgl_checkin',$tgl_checkin)->where('tgl_checkout',$tgl_checkout)->get();
         if($cart->count()>0){
             $updateCart = $cart[0];
-            $updateCart->jumlah_kamar = $jumlah+$updateCart->jumlah_kamar;
+            $updateCart->jumlah_kamar_pesan = $jumlah+$updateCart->jumlah_kamar;
             $updateCart->save();
         }else{
             //insert ke cart kalau tidak ada
@@ -89,11 +91,11 @@ class KamarController extends Controller
         }
         $kamars = Kamar::all();
 
-        return view("Customer.allkamars", compact("kamars"));
+        return redirect('/kamar/'.session()->get('idHotel'));
     }
 
     public function showCart(Request $req){
-        $cart = Cart::where('id_customer',"guest001")
+        $cart = Cart::where('id_customer',session()->get('loggedIn')->id_customer)
             ->join('kategori_hotel','kategori_hotel.id_kategori','=','cart.id_kamar')
             ->join('hotel','hotel.id_hotel','=','kategori_hotel.id_hotel')
             ->get();

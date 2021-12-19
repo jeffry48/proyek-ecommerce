@@ -113,12 +113,6 @@
                                         </div>
                                     </div>
                             </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -132,23 +126,26 @@
                 <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="item active">
-                            @for ($i=0;$i<3;$i++)
-                                <div class="col-sm-4">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <h4>{{$reviews[$i]->nama_customer}}</h4>
-                                                <div>
-                                                @for ($j=0; $j<$reviews[$i]->rating; $j+=1)
-                                                    <img style="width:30px;height:30px" src="{{asset('images/home/bintang.jpg')}}" alt="">
-                                                @endfor
+                            @if ($reviews->count()>3)
+                                @for ($i=0;$i<3;$i++)
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <h4>{{$reviews[$i]->nama_customer}}</h4>
+                                                    <div>
+                                                    @for ($j=0; $j<$reviews[$i]->rating; $j+=1)
+                                                        <img style="width:30px;height:30px" src="{{asset('images/home/bintang.jpg')}}" alt="">
+                                                    @endfor
+                                                    </div>
+                                                    <p>{{$reviews[$i]->detail_review}}</p>
                                                 </div>
-                                                <p>{{$reviews[$i]->detail_review}}</p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endfor
+                                @endfor
+                            @endif
+
                         </div>
                         @if ($reviews->count()>3)
                             <div class="item">
