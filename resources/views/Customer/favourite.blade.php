@@ -21,7 +21,7 @@
                             <ul role="menu" class="sub-menu">
                                 <li><a href="/profile">My Profile</a></li>
                                 <li><a href="/favourite">My Favourite</a></li>
-                                <li><a href="#">My History</a></li>
+                                <li><a href="/history">My History</a></li>
                             </ul>
                         </li>
 

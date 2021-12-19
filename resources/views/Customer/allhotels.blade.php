@@ -23,7 +23,7 @@
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="/profile">My Profile</a></li>
                                     <li><a href="/favourite">My Favourite</a></li>
-                                    <li><a href="#">My History</a></li>
+                                    <li><a href="/history">My History</a></li>
                                 </ul>
                             </li>
                         @endif
@@ -41,6 +41,8 @@
                     </form>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div><!--/header-bottom-->
@@ -162,6 +164,7 @@
 								 <b>Rp 0</b> <b class="pull-right">Rp 500000</b>
 							</div>
 						</div><!--/price-range-->
+
                     </div><!--/brands_products-->
                     <br><br>
                 </form>
