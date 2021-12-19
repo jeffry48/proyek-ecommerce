@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
 class Daerah extends Model
 {
     protected $table = "daerah";
+
     protected $primaryKey = "id_daerah";
     public $incrementing = false;
     public $timestamps = false;

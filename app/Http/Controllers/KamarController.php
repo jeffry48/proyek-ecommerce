@@ -3,15 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\FasilitasHotel;
+use App\Hotel;
 use App\Kamar;
+use App\ReviewHotel;
 use Illuminate\Http\Request;
 
 class KamarController extends Controller
 {
-    public function index(){
-        $kamars = Kamar::all();
+    public function index(Request $req, $id){
+        session(['idHotel' => $id]);
+        $kamars = Kamar::where('id_hotel',$id)->get();
+        $hotel = Hotel::where('id_hotel', $id)
+                        ->join('daerah','daerah.id_daerah','=','hotel.Daerah')
+                        ->join('kota','kota.id_kota','=','hotel.Kota')
+                        ->first();
 
-        return view("Customer.allkamars", compact("kamars"));
+        $fasilitass = FasilitasHotel::join('fas_utk_hotel','fas_utk_hotel.id_fasilitas','=','fasilitas_hotel.id_fasilitas')
+                                    ->where('id_hotel',$id)->get();
+
+        $reviews = ReviewHotel::where('id_hotel',$id)
+                                ->join('customer','customer.id_customer','=','review_hotel.id_customer')
+                                ->get();
+        $rating = 0;
+        foreach ($reviews as $review) {
+            $rating += $review->rating;
+        }
+        $rating = $rating/$reviews->count();
+
+        return view("Customer.allkamars", compact("hotel","kamars","fasilitass","rating","reviews"));
+    }
+
+    public function addReview(Request $req){
+        $rating = $req->input('rating');
+        $detail = $req->input('detail');
+
+        $now = date("Y-m-d");
+
+        $review = new ReviewHotel();
+        $review->id_customer = session()->get('loggedIn')->id_customer;
+        $review->rating = $rating;
+        $review->id_hotel = session()->get('idHotel');
+        $review->detail_review = $detail;
+        $review->tgl_review = $now;
+        $review->save();
+
+        return redirect('/kamar/'.session()->get('idHotel'));
     }
 
     public function addKamartoCart(Request $request, $id){
@@ -42,7 +79,7 @@ class KamarController extends Controller
 
             $newCart = new Cart;
             $newCart->id_cart = $id_cart;
-            $newCart->id_customer = "guest001";
+            $newCart->id_customer = session()->get('loggedIn')->id_customer;
             $newCart->id_kamar = $id;
             $newCart->jumlah_kamar_pesan = $jumlah;
             $newCart->tgl_checkin = $tgl_checkin;
