@@ -471,16 +471,19 @@ class AdminController extends Controller
         join hotel ho on ho.id_hotel=d.id_hotel
         join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
         group by d.id_hotel
-        ORDER BY COUNT(d.id_hotel) DESC
-        LIMIT 1');
+        ORDER BY COUNT(d.id_hotel) DESC');
+        $pemilik=DB::select('select * from hotel where id_hotel="'.$penghasilan[0]->id_hotel.'"');
 
         $penghasilan2=DB::select('select * from dtrans d
         join htrans h on h.id_htrans=d.id_htrans
         join hotel ho on ho.id_hotel=d.id_hotel
         join pemilik_hotel p on ho.id_pemilik=p.id_pemilik
-        where d.id_hotel="'.$penghasilan[0]->id_hotel.'"
+        where d.id_hotel in (
+            select id_hotel from hotel
+            where id_pemilik="'.$pemilik[0]->id_pemilik.'"
+        )
         order by h.tgl_transaksi desc');
-        // dd($penghasilan2);
+
         return view("Admin.laporanPenghasilanPemTerbesar", ["penghasilan"=>$penghasilan2]);
     }
 }
