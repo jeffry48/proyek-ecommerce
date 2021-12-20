@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hotel;
 
 use App\Daerah;
+use App\DTrans;
 use App\FasilitasHotel;
 use App\Hotel;
 use App\HTrans;
@@ -227,9 +228,9 @@ class HotelController extends Controller
     public function viewListTransaksi(Request $request)
     {
         $id_hotel = session()->get('hotelLoggin');
-        $htrans = HTrans::select("*")->where("id_hotel",$id_hotel);
+        $dtrans = DTrans::select("*")->where("id_hotel",$id_hotel);
         return view("hotel.transaksi.listTransaksi",[
-            "htrans" => $htrans->get()
+            "htrans" => $dtrans->get()
         ]);
     }
 

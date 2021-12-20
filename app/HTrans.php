@@ -21,4 +21,9 @@ class HTrans extends Model
     {
         return $this->hasMany(DTrans::class);
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,"id_customer","id_customer");
+    }
 }
