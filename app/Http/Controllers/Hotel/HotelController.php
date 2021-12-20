@@ -28,7 +28,7 @@ class HotelController extends Controller
     public function login(Request $request)
     {
         $cekLogin = PemilikHotel::select("*")->where("username_pemilik",$request->username)
-            ->where('password_pemilik',$request->password)->first();
+            ->where('password_pemilik',$request->password)->where('ban',0)->first();
         if($cekLogin!=null){
             session(['adminHotelLoggin' => $cekLogin]);
             return redirect("/userhotel/pilihhotel");
@@ -151,7 +151,12 @@ class HotelController extends Controller
             $imgfile = $request->file('imgfile');
             if($request->hasFile('imgfile')){
                 $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
-                $imgfile->storeAs("public/images/hotel_images", $filename);
+                // $imgfile->storeAs("public/images/hotel_images", $filename);
+                Storage::putFileAs(
+                    'public/kamar_images',
+                    $request->file("imgfile"),
+                    $filename
+                );
             }
         }else{
             $filename = $request->gambar_awal;
@@ -185,7 +190,12 @@ class HotelController extends Controller
             $imgfile = $request->file('imgfile');
             if($request->hasFile('imgfile')){
                 $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
-                $imgfile->storeAs("public/images/hotel_images", $filename);
+                // $imgfile->storeAs("public/images/hotel_images", $filename);
+                Storage::putFileAs(
+                    'public/kamar_images',
+                    $request->file("imgfile"),
+                    $filename
+                );
             }
         }
         try {
@@ -308,7 +318,12 @@ class HotelController extends Controller
             $imgfile = $request->file('imgfile');
             if($request->hasFile('imgfile')){
                 $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
-                $imgfile->storeAs("public/images/hotel_images", $filename);
+                // $imgfile->storeAs("public/images/hotel_images", $filename);
+                Storage::putFileAs(
+                    'public/hotel_images',
+                    $request->file("imgfile"),
+                    $filename
+                );
             }
         }else{
             $filename = $request->gambar_awal;

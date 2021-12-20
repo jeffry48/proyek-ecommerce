@@ -64,22 +64,6 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            Search
-                        </button>
-                        <!-- buat search -->
-                        <div class="collapse" id="collapseExample">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <form action="">
-                                        <div class="box">
-                                            search:
-                                            <input type="text" name="" id="" class="form-control" placeholder="search">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
 
                         @if (isset($customers))
                             @for ($i = 0; $i < (count($customers)/3); $i++)

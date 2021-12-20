@@ -75,7 +75,7 @@ class user extends Controller
                         ->get();
         if($cekLogin->count()>0){
             session(['loggedIn' => $cekLogin[0]]);
-            return redirect('hotel');
+            return redirect('customerHome');
             //ini buat login ke penyewa
         }else{
             session(['errMessage' => "username/password salah"]);

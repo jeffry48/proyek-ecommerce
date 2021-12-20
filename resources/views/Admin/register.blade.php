@@ -109,18 +109,11 @@
                                             No Telp:
                                             <input type="text" name="noTelp" id="" class="form-control" required>
                                         </div>
-                                        <div class="form-group">
-                                            email:
-                                            <input type="text" name="email" id="" class="form-control" required>
-                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <button class="btn btn-primary">Register</button>
                                     </div>
                                 </form>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary"><a href="/login" style="color:white">Back to Login</a></button>
-                                </div>
                             </div>
                         </div>
                         <!-- /.row -->

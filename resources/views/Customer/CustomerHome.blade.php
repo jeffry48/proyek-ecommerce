@@ -54,7 +54,7 @@
         </div>
         <br><br>
 
-        @if (session()->get('loggedIn')->id_customer)
+        @if (session()->get('loggedIn'))
             <div class="row">
                 <div class="col-sm-12">
                     <div class="recommended_items"><!--recommended_items-->
@@ -81,7 +81,6 @@
                                                 </div>
                                             </div>
                                         @endfor
-
                                     @else
                                         @foreach ($favs as $fav)
                                         <div class="col-sm-4">

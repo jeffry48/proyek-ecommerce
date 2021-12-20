@@ -38,8 +38,7 @@
                             <div class="card-header">
                                 <center><input type="radio" name="id_hotel" value="{{$item->id_hotel}}" id=""></center>
                               </div>
-                            <img class="card-img-top" src="" alt="Card image cap">
-                            <div class="card-body">
+                              <img src="{{Storage::disk('local')->url('hotel_images/'.$item->gambar_hotel)}}" alt="" />                            <div class="card-body">
                                 <h5 class="card-title"><center>
                                     {{$item->nama_hotel}}
                                     @for ($i=0; $i<$item->bintang; $i+=1)
