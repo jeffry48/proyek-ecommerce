@@ -27,7 +27,6 @@
                     });
                 </script>
             </div>
-            @include('hotel.include.footer')
     </section>
 </body>
 </html>

@@ -1,7 +1,7 @@
 @extends('hotel.mainpage')
 @section('content')
     <h1>EDIT DETAIL KAMAR</h1>
-    <form action="/userhotel/product/edit/simpan" method="post">
+    <form action="/userhotel/product/edit/simpan" method="post" enctype="multipart/form-data">
         @csrf
         @include('hotel.product.isiDetailProduct')
         <br>

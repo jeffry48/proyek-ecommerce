@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\DTrans;
 use App\FasilitasHotel;
 use App\Hotel;
+use App\HTrans;
 use App\Kamar;
 use App\ReviewHotel;
+use Exception;
 use Illuminate\Http\Request;
 
 class KamarController extends Controller
@@ -163,4 +166,94 @@ class KamarController extends Controller
 
         return view('Customer.cart',['cartItems'=>$cart,'total'=>$total]);
     }
+
+    // CHECKOUT--
+    public function viewCheckout(Request $request)
+    {
+        $id_cart = $request->id_cart;
+        $cart = Cart::select("*")->where("id_cart",$id_cart);
+        $hotel = Hotel::select("*")->where("id_hotel", $cart->first()->kamar->id_hotel);
+        return view('Customer.checkout',[
+            "pesanan"=>$cart->first(),
+            "hotel"=> $hotel->first()
+        ]);
+    }
+    public function viewPembayaran(Request $request)
+    {
+        $id_cart = $request->id_cart;
+        $cart = Cart::select("*")->where("id_cart",$id_cart)->first();
+        $hargaKamar = $cart->kamar->harga_kamar;
+        $jumKamar = $cart->jumlah_kamar_pesan;
+        $jumMalam = date_diff(date_create($cart->tgl_checkin),date_create($cart->tgl_checkout))->format("%a");
+        return view('Customer.pembayaran',[
+            "id_cart" => $id_cart,
+            "hargaKamar"=>$hargaKamar,
+            "jumlahKamar"=> $jumKamar,
+            "jumlahMalam" => $jumMalam,
+            "totalBayar" => $hargaKamar*$jumKamar*$jumMalam
+        ]);
+    }
+    public function generateKeyHtrans()
+    {
+        $kode = "HT";
+        $idmaks = HTrans::max('id_htrans');
+        $index = ((int)substr($idmaks,3))+1;
+        $kode .= str_pad($index,8,'0',STR_PAD_LEFT);
+        return $kode;
+    }
+    public function generateKeyDtrans()
+    {
+        $kode = "DT";
+        $idmaks = DTrans::max('id_dtrans');
+        $index = ((int)substr($idmaks,3))+1;
+        $kode .= str_pad($index,8,'0',STR_PAD_LEFT);
+        return $kode;
+    }
+    public function addTransaksi(Request $request)
+    {
+        $id_cart = $request->id_cart;
+        $id_customer = session()->get('loggedIn')->id_customer;
+        $cart = Cart::select("*")->where("id_cart",$id_cart)->first();
+        $hargaKamar = $cart->kamar->harga_kamar;
+        $jumKamar = $cart->jumlah_kamar_pesan;
+        $jumMalam = date_diff(date_create($cart->tgl_checkin),date_create($cart->tgl_checkout))->format("%a");
+        $imgfile = $request->file('imgfile');
+        $filename = "";
+
+        if ($request->hasFile('imgfile')) {
+            $imgfile = $request->file('imgfile');
+            if($request->hasFile('imgfile')){
+                $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
+                $imgfile->storeAs("public/images/hotel_images", $filename);
+            }
+        }
+        try{
+            $HTrans = [
+                "id_htrans" => $this->generateKeyHtrans(),
+                "id_customer" => $id_customer,
+                "metode_bayar" => "transfer",
+                "tgl_transaksi" => date("Y-m-d"),
+                "total_harga" => $hargaKamar*$jumKamar*$jumMalam,
+                "gambar_bukti" => $filename
+            ];
+            HTrans::create($HTrans);
+            $dtrans = [
+                "id_dtrans" => $this->generateKeyDtrans(),
+                "id_htrans" =>$this->generateKeyHtrans(),
+                "id_hotel" =>$cart->kamar->id_hotel,
+                "id_kategori" =>$cart->id_kamar,
+                "jumlah_kamar" =>$cart->jumlah_kamar_pesan,
+                "tgl_checkin" =>$cart->tgl_checkin,
+                "tgl_checkout" =>$cart->tgl_checkout,
+                "harga_kamar" => $hargaKamar,
+                "subtotal" => $hargaKamar*$jumKamar*$jumMalam,
+            ];
+            DTrans::create($dtrans);
+            Cart::find($id_cart)->delete();
+            return redirect('/cart')->with('alert',"Berhasil menambah transaksi");
+        }catch (Exception $e) {
+            return back()->with('alert',$e->getMessage());
+        }
+    }
+    //--CHECKOUT
 }

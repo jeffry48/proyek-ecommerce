@@ -47,7 +47,7 @@ Route::get('/register', function () {
 });
 Route::post('/prosesRegister', "user@register");
 Route::get('/login', function () {
-    return view('hotel.login');
+    return view('login');
 });
 Route::post('/prosesLogin', "user@login");
 Route::get('/listHotel', "hotels@getAllHotels");
@@ -55,6 +55,9 @@ Route::get('/detailHotel{idHotel}', "hotels@getDetailHotel");
 Route::get('/addFavorite', "hotels@addfavorite");
 Route::get('/removeFavorite', "hotels@removeFavorite");
 Route::get('/listFavorite', "user@getAllFavorite");
+Route::post('/checkout', "KamarController@viewCheckout");
+Route::post('/pembayaran', "KamarController@viewPembayaran");
+Route::post('/bayar', "KamarController@addTransaksi");
 
 // Route::get('/hotel', "HotelsController@index");
 // Route::get('/register', function () {
@@ -140,6 +143,13 @@ Route::prefix("admin")->group(function ()
 //HOTEL--
 Route::prefix("userhotel")->group(function ()
 {
+    Route::get('/login',"Hotel\HotelController@viewLogin");
+    Route::post('/ceklogin',"Hotel\HotelController@login");
+    Route::post('/register',"Hotel\HotelController@viewRegister");
+    Route::get('/pilihhotel',"Hotel\HotelController@viewPilihHotel");
+    Route::post('/sethotel',"Hotel\HotelController@setHotel");
+    Route::get('/logout',"Hotel\HotelController@logout");
+
     Route::get('/getdaerahfromkota',"Hotel\HotelController@getDaerahfromKota");
     //Route::get('/getkotafromdaerah',"Hotel\HotelController@getKotafromDaerah");
 

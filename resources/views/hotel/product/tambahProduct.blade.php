@@ -1,7 +1,7 @@
 @extends('hotel.mainpage')
 @section('content')
 <div class="content-wrapper">
-    <form action="/userhotel/product/tambah/insert" method="post">
+    <form action="/userhotel/product/tambah/insert" method="post" enctype="multipart/form-data">
     <section class="content">
         <div class="container-fluid">
             <div class="row justify-content-between">
@@ -14,10 +14,13 @@
                     <div class="card">
                         <div class="card-body">
                             @csrf
+                            <center>
+                                <input type="file" name="imgfile" id="imgfile">
+                                </center>
                             Nama Kamar
                             <br><input type="text" class="form-control" name="namaKamar" id="" placeholder="Masukkan nama tipe kamar"><br>
                             Harga Kamar
-                            <br><input type="text" class="form-control" name="hargaKamar" id="" placeholder="Masukkan harga tipe kamar"><br>
+                            <br><input type="number" class="form-control" name="hargaKamar" id="" placeholder="Masukkan harga tipe kamar"><br>
                             Jumlah Kamar
                             <br><input type="number" class="form-control" name="jmlhKamar" id="" placeholder="Masukkan jumlah kamar dengan tipe kamar ini"><br>
                             Deskripsi
