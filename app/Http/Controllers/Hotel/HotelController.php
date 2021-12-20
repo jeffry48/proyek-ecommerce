@@ -11,20 +11,65 @@ use App\Kamar;
 use App\KategoriHotel;
 use App\Kota;
 use App\MetodeBayar;
+use App\PemilikHotel;
 use Exception;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Input\Input;
 
 class HotelController extends Controller
 {
+    public function viewLogin(Request $request)
+    {
+        return view("hotel.loginHotel");
+    }
+    public function login(Request $request)
+    {
+        $cekLogin = PemilikHotel::select("*")->where("username_pemilik",$request->username)
+            ->where('password_pemilik',$request->password)->first();
+        if($cekLogin!=null){
+            session(['adminHotelLoggin' => $cekLogin]);
+            return redirect("/userhotel/pilihhotel");
+        }else{
+            return back()->with('alert',"Username/Password salah");
+        }
+    }
+    public function viewRegister(Request $request)
+    {
+        return view("hotel.registerHotel");
+    }
+
+    public function viewPilihHotel(Request $request)
+    {
+        $admin_hotel = session()->get('adminHotelLoggin');
+        $hotel = Hotel::select('*')->where("id_pemilik",$admin_hotel->id_pemilik)->get();
+        return view("hotel.listHotel",[
+            "hotel"=>$hotel
+        ]);
+    }
+
+    public function setHotel(Request $request)
+    {
+        session(['hotelLoggin' => $request->id_hotel]);
+        return redirect("userhotel/");
+    }
+
+    public function logout()
+    {
+        session()->forget('adminHotelLoggin');
+        session()->forget('hotelLoggin');
+        return redirect('userhotel/login');
+    }
     //HOME--
     public function viewHome()
     {
-        $nama_hotel = "";
-        $admin_hotel = "";
+        $admin_hotel = session()->get('adminHotelLoggin');
+        $id_hotel = session()->get('hotelLoggin');
+        $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
         return view("hotel.home",[
-            "nama_hotel" => $nama_hotel,
-            "adminhotel" => $admin_hotel
+            "adminhotel" => $admin_hotel,
+            "hotel" => $hotel->first()
         ]);
     }
 
@@ -43,7 +88,7 @@ class HotelController extends Controller
     //PRODUCT--
     public function viewListProduct()
     {
-        $id_hotel = "HO00000001";
+        $id_hotel = session()->get('hotelLoggin');
         $tipe_kamar = Kamar::select("*")->where("id_hotel", $id_hotel);
         return view("hotel.product.listProduct",[
             "products"=>$tipe_kamar->get()
@@ -76,27 +121,50 @@ class HotelController extends Controller
         $harga_kamar = $request->hargaKamar;
         $jmlh_kamar = $request->jmlhKamar;
         $deskripsi_kamar = $request->deskripsiKamar;
+        $imgfile = $request->file('imgfile');
+        $filename = "";
+
+        if ($request->hasFile('imgfile')) {
+            $imgfile = $request->file('imgfile');
+            if($request->hasFile('imgfile')){
+                $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
+                $imgfile->storeAs("public/images/hotel_images", $filename);
+            }
+        }else{
+            $filename = $request->gambar_awal;
+        }
+
         try {
             Kamar::where('id_kategori',$id_kategori)
             ->update([
                 'nama_kamar'=>$nama_kamar,
                 'harga_kamar'=>$harga_kamar,
                 'jumlah_kamar'=>$jmlh_kamar,
-                'detail_kamar'=>$deskripsi_kamar
+                'detail_kamar'=>$deskripsi_kamar,
+                "gambar_kamar" => $filename
             ]);
             return redirect('/userhotel/product/'.$id_kategori)->with('alert','Perubahan berhasil disimpan');
         } catch (Exception $e) {
             return back()->with('alert',$e->getMessage());
         }
-
     }
     public function tambahProduct(Request $request)
     {
-        $id_hotel = "HO00000001";
+        $id_hotel = session()->get('hotelLoggin');
         $nama_kamar = $request->namaKamar;
         $harga_kamar = $request->hargaKamar;
         $jmlh_kamar = $request->jmlhKamar;
         $deskripsi_kamar = $request->deskripsiKamar;
+        $imgfile = $request->file('imgfile');
+        $filename = "";
+
+        if ($request->hasFile('imgfile')) {
+            $imgfile = $request->file('imgfile');
+            if($request->hasFile('imgfile')){
+                $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
+                $imgfile->storeAs("public/images/hotel_images", $filename);
+            }
+        }
         try {
             $kamar_baru = [
                 "id_kategori" => $this->generateKodeKamar($id_hotel),
@@ -105,7 +173,7 @@ class HotelController extends Controller
                 "harga_kamar" => $harga_kamar,
                 "jumlah_kamar" => $jmlh_kamar,
                 "detail_kamar" => $deskripsi_kamar,
-                "gambar_kamar" => "coba1"
+                "gambar_kamar" => $filename
             ];
             Kamar::create($kamar_baru);
             return redirect('/userhotel/product')->with('alert','Tipe kamar berhasil ditambah');
@@ -136,7 +204,7 @@ class HotelController extends Controller
     //TRANSAKSI--
     public function viewListTransaksi(Request $request)
     {
-        $id_hotel = "HO00000003";
+        $id_hotel = session()->get('hotelLoggin');
         $htrans = HTrans::select("*")->where("id_hotel",$id_hotel);
         return view("hotel.transaksi.listTransaksi",[
             "htrans" => $htrans->get()
@@ -156,7 +224,7 @@ class HotelController extends Controller
     //PROFIL--
     public function viewProfil()
     {
-        $id_hotel = "HO00000003";
+        $id_hotel = session()->get('hotelLoggin');
         $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
         return view("hotel.profil.profil",[
             "mode_edit"=>false,
@@ -183,8 +251,8 @@ class HotelController extends Controller
     // }
     public function viewEditProfil(Request $request)
     {
-        $id_hotel = "HO00000003";
-        $metode_bayar = MetodeBayar::select("*");
+        $id_hotel = session()->get('hotelLoggin');
+        //$metode_bayar = MetodeBayar::select("*");
         $kota = Kota::select("*");
         $hotel = Hotel::select("*")->where("id_hotel",$id_hotel);
         $id_kota_selected = $hotel->first()->kotaHotel->id_kota;
@@ -195,13 +263,13 @@ class HotelController extends Controller
             "hotel"=>$hotel->first(),
             "fasilitas"=>$fasilitas->get(),
             "kota" => $kota->get(),
-            "daerah" => $daerah->get(),
-            "metode_bayar" => $metode_bayar->get()
+            "daerah" => $daerah->get()
+            //"metode_bayar" => $metode_bayar->get()
         ]);
     }
     public function simpanEditProfil(Request $request)
     {
-        $id_hotel = "HO00000003";
+        $id_hotel = session()->get('hotelLoggin');
         $nama_hotel = $request->namaHotel;
         $id_kota = $request->kota;
         $id_daerah = $request->daerah;
@@ -210,7 +278,19 @@ class HotelController extends Controller
         $deskripsi_hotel = $request->deskripsiHotel;
         $arrfasilitas = $request->fasilitas;
         $arrberbayar = $request->berbayar;
-        $arrmetodebayar = $request->metode_bayar;
+        $imgfile = $request->file('imgfile');
+        $filename = "";
+
+        if ($request->hasFile('imgfile')) {
+            $imgfile = $request->file('imgfile');
+            if($request->hasFile('imgfile')){
+                $filename = pathinfo($imgfile->getClientOriginalName(), PATHINFO_FILENAME).".".$imgfile->getClientOriginalExtension();
+                $imgfile->storeAs("public/images/hotel_images", $filename);
+            }
+        }else{
+            $filename = $request->gambar_awal;
+        }
+        //$arrmetodebayar = $request->metode_bayar;
         try {
             $hotel = Hotel::where("id_hotel",$id_hotel)->first();
             $data_fasilitas = [];
@@ -221,20 +301,21 @@ class HotelController extends Controller
                 ];
             }
             $hotel->fasilitas()->sync($data_fasilitas);
-            $data_metode_bayar = [];
-            for ($i=0; $i < count($arrmetodebayar); $i++) {
-                $data_metode_bayar[$arrmetodebayar[$i]]=[
-                    "id_hotel_metode" => "MBH".substr($id_hotel,3).str_pad(($i+1),2,"0",STR_PAD_LEFT)
-                ];
-            }
-            $hotel->metode_bayar()->sync($data_metode_bayar);
+            // $data_metode_bayar = [];
+            // for ($i=0; $i < count($arrmetodebayar); $i++) {
+            //     $data_metode_bayar[$arrmetodebayar[$i]]=[
+            //         "id_hotel_metode" => "MBH".substr($id_hotel,3).str_pad(($i+1),2,"0",STR_PAD_LEFT)
+            //     ];
+            // }
+            // $hotel->metode_bayar()->sync($data_metode_bayar);
             Hotel::where('id_hotel',$id_hotel)->update([
                 "nama_hotel" => $nama_hotel,
                 "no_telp_hotel"=>$no_telp_hotel,
                 "alamat_hotel" => $alamat_hotel,
                 "detail_hotel" => $deskripsi_hotel,
                 "Kota" => $id_kota,
-                "Daerah" => $id_daerah
+                "Daerah" => $id_daerah,
+                "gambar_hotel" => $filename
             ]);
             return redirect('/userhotel/profil')->with('alert',"Perubahan berhasil disimpan");
         }

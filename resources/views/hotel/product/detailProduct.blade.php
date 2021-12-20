@@ -1,7 +1,7 @@
 @extends('hotel.mainpage')
 @section('content')
     <div class="content-wrapper">
-        <form action="/userhotel/product/{{$kamar->id_kategori}}/edit" method="get">
+        <form action="/userhotel/product/{{$kamar->id_kategori}}/edit" method="get" enctype="multipart/form-data">
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">

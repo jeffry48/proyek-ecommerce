@@ -1,4 +1,11 @@
 <div class="card-body">
+    <center>
+        <img name="gmbr" src="{{asset("/hotel_images".$kamar->gambar_kamar)}}" alt="" /><br>
+        <input type="hidden" name="gambar_awal" value="{{$kamar->gambar_kamar}}">
+        @if ($mode_edit)
+            <input type="file" name="imgfile" id="imgfile">
+        @endif
+        </center>
     <div class="form-group">
         @isset($kamar)
         {{-- GAMBAR BELUM --}}
