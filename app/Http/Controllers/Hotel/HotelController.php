@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hotel;
 
 use App\Daerah;
+use App\DTrans;
 use App\FasilitasHotel;
 use App\Hotel;
 use App\HTrans;
@@ -38,6 +39,28 @@ class HotelController extends Controller
     public function viewRegister(Request $request)
     {
         return view("hotel.registerHotel");
+    }
+
+    public function generateIdPemilik()
+    {
+        $kode = "PE";
+        $idmaks = PemilikHotel::max('id_pemilik');
+        $index = ((int)substr($idmaks,2))+1;
+        $kode .= str_pad($index,8,'0',STR_PAD_LEFT);
+        return $kode;
+    }
+
+    public function register(Request $request)
+    {
+        $pemilik = [
+            "id_pemilik" => $this->generateIdPemilik(),
+            "username_pemilik" => $request->username,
+            "password_pemilik" => $request->password,
+            "nama_pemilik" => $request->nama,
+            "no_telp_pemilik" => $request->noTelp
+        ];
+        PemilikHotel::create($pemilik);
+        return redirect("/userhotel/login");
     }
 
     public function viewPilihHotel(Request $request)
@@ -215,9 +238,9 @@ class HotelController extends Controller
     public function viewListTransaksi(Request $request)
     {
         $id_hotel = session()->get('hotelLoggin');
-        $htrans = HTrans::select("*")->where("id_hotel",$id_hotel);
+        $dtrans = DTrans::select("*")->where("id_hotel",$id_hotel);
         return view("hotel.transaksi.listTransaksi",[
-            "htrans" => $htrans->get()
+            "htrans" => $dtrans->get()
         ]);
     }
 

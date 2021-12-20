@@ -14,6 +14,8 @@ class DTrans extends Model
 
     public function htrans()
     {
-        return $this->belongsToMany(HTrans::class,"id_htrans","id_htrans");
+        return $this->belongsTo(HTrans::class,"id_htrans","id_htrans");
     }
+
+
 }
