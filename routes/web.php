@@ -145,6 +145,7 @@ Route::prefix("userhotel")->group(function ()
     Route::get('/login',"Hotel\HotelController@viewLogin");
     Route::post('/ceklogin',"Hotel\HotelController@login");
     Route::post('/register',"Hotel\HotelController@viewRegister");
+    Route::post('/prosesregister',"Hotel\HotelController@register");
     Route::get('/pilihhotel',"Hotel\HotelController@viewPilihHotel");
     Route::post('/sethotel',"Hotel\HotelController@setHotel");
     Route::get('/logout',"Hotel\HotelController@logout");
