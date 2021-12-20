@@ -15,13 +15,13 @@
                 </div>
                 <div class="mainmenu pull-left">
                     <ul class="nav navbar-nav collapse navbar-collapse">
-                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="/customerHome" class="active">Home</a></li>
                         <li><a href="/hotel" class="active">Hotel</a></li>
                         <li class="dropdown"><a href="#">Account<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="/profile">My Profile</a></li>
                                 <li><a href="/favourite">My Favourite</a></li>
-                                <li><a href="#">My History</a></li>
+                                <li><a href="/history">My History</a></li>
                             </ul>
                         </li>
                         <li><a href="contact-us.html">Contact</a></li>

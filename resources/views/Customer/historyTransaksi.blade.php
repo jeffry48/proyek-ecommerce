@@ -24,6 +24,7 @@
                                 <li><a href="/history">My History</a></li>
                             </ul>
                         </li>
+
                         <li><a href="contact-us.html">Contact</a></li>
                     </ul>
                 </div>
@@ -41,33 +42,27 @@
 <section>
     <center>
         <div class="container">
-            <h3>Profile <a href="/editProfile"><img style="width:10px;height:10px" src="{{asset('images/edit.png')}}" alt=""></a></h3>
-            <form action="/proseseditProfile" method="post">
-                @csrf
-                <table>
+            <h3>History Transaksi</h3>
+            <table style="border:1px solid black" class="table table-sm table-bordered">
+                <thead class="table-light">
+                    <th style="border:1px solid black">Tanggal Transaksi</th>
+                    <th style="border:1px solid black">Nama Hotel</th>
+                    <th style="border:1px solid black">Jenis Kamar</th>
+                    <th style="border:1px solid black">Jumlah Kamar</th>
+                    <th style="border:1px solid black">Total Harga</th>
+                    <th style="border:1px solid black">Jenis Pembayaran</th>
+                </thead>
+                @foreach ($transaksis as $transaksi)
                     <tr>
-                        <td>Username:</td>
-                        <td>{{session()->get('loggedIn')->username_customer}}</td>
+                        <td style="border:1px solid black">{{$transaksi->tgl_transaksi}}</td>
+                        <td style="border:1px solid black">{{$transaksi->nama_hotel}} </td>
+                        <td style="border:1px solid black">{{$transaksi->nama_kamar}}</td>
+                        <td style="border:1px solid black">{{$transaksi->jumlah_kamar}}</td>
+                        <td style="border:1px solid black">{{$transaksi->subtotal}}</td>
+                        <td style="border:1px solid black">{{$transaksi->metode_bayar}}</td>
                     </tr>
-                    <tr>
-                        <td>Nama Customer:</td>
-                        <td><input type="text" name="nama" id="" value="{{session()->get('loggedIn')->nama_customer}}"></td>
-                    </tr>
-                    <tr>
-                        <td>No Telp Customer:</td>
-                        <td><input type="text" name="no_telp" id="" value="{{session()->get('loggedIn')->no_telp_customer}}"></td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td><input type="text" name="email" id="" value="{{session()->get('loggedIn')->email_customer}}"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <center><button class="btn btn-primary">Update Profile</button></center>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                @endforeach
+            </table>
         </div>
     </center>
 </section>
