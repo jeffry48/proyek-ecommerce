@@ -1,7 +1,7 @@
 @extends('hotel.mainpage')
 @section('content')
     <h1>EDIT PROFIL</h1>
-    <form action="/userhotel/profil/edit/simpan" id="form" method="post">
+    <form action="/userhotel/profil/edit/simpan" id="form" method="post" enctype="multipart/form-data">
         @csrf
         @include('hotel.profil.isiprofil')
         <div class="row justify-content-end"  style="margin-right: 20px;">

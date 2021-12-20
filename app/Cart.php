@@ -12,4 +12,9 @@ class Cart extends Model
     public $incrementing = false;
     public $timestamps = false;
     public $guarded = [];
+
+    public function kamar()
+    {
+        return $this->belongsTo(Kamar::class,"id_kamar","id_kategori");
+    }
 }

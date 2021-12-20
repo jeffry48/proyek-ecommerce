@@ -37,6 +37,8 @@
 </div><!--/header-bottom-->
 </header><!--/header-->
 
+<form action="/checkout" method="post">
+    @csrf
 <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -100,11 +102,12 @@
                     <ul>
                         <li>Total <span>{{$total}}</span></li>
                     </ul>
-                    <a class="btn btn-default check_out" href="">Check Out</a>
+                    <button class="btn btn-default check_out" href="">Check Out</button>
                 </div>
             </div>
         </div>
     </div>
 </section><!--/#do_action-->
+</form>
 @endsection
 

@@ -1,4 +1,12 @@
 <div class="card-body">
+    <center>
+    <img name="gmbr" src="{{asset("/hotel_images".$hotel->gambar_hotel)}}" alt="" /><br>
+    <input type="hidden" name="gambar_awal" value="{{$hotel->gambar_hotel}}">
+    @if ($mode_edit)
+        <input type="file" name="imgfile" id="imgfile">
+    @endif
+    </center>
+    <br>
     <div class="form-group">
         @isset($hotel)
         Nama Hotel
@@ -9,7 +17,11 @@
         >
     </div>
 @if (!$mode_edit)
-    Bintang <input type="text" name="bintangHotel" value="{{$hotel->bintang}}" readonly="true"> <br><br>
+    Bintang
+    @for ($i=0; $i<$hotel->bintang; $i+=1)
+        <img style="width:30px;height:30px" src="{{asset('images/home/bintang.jpg')}}" alt="">
+    @endfor
+    <br><br>
 @endif
     <div class="form-group">
         No.Telp Hotel
@@ -34,7 +46,7 @@
                     @if (!$mode_edit)
                     <input type="text" class="form-control" name="kotaHotel" value="{{$hotel->kotaHotel->nama_kota}}" id="kotaHotel" readonly="true">
                     @else
-                    <select name="kota" id="cbKota">
+                    <select name="kota" id="cbKota" class="form-control">
                         @isset($kota)
                             @foreach ($kota as $item)
                                 <option value="{{$item->id_kota}}"
@@ -53,7 +65,7 @@
                     @if (!$mode_edit)
                         <input type="text" name="DaerahHotel" class="form-control" value="{{$hotel->daerahHotel->nama_daerah}}" id="DaerahHotel" readonly="true">
                     @else
-                        <select id="cbDaerah" name="daerah">
+                        <select id="cbDaerah" name="daerah" class="form-control">
                             @isset($daerah)
                                 @foreach ($daerah as $item)
                                     <option value="{{$item->id_daerah}}"
@@ -120,7 +132,7 @@
     @endif
     </div>
     <div class="form-group">
-    Metode Pembayaran
+    {{-- Metode Pembayaran
     @if (!$mode_edit)
         @if(isset($hotel->metode_bayar) && count($hotel->metode_bayar))
             <ul>
@@ -141,7 +153,7 @@
                 > {{$item->nama_metode}}
             @endforeach
         @endisset
-    @endif
+    @endif --}}
     </div>
     <div class="form-group">
         Deskripsi

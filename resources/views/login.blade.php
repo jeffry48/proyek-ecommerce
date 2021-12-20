@@ -82,14 +82,8 @@
                             <div class="col-sm-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form action="prosesLogin" method="post">
+                                        <form action="/userhotel/ceklogin" method="post">
                                             @csrf
-                                            @if (session()->get('errMessage')!=null)
-                                                <div style="color: red" class="form-group">
-                                                    {{session()->get('errMessage')}}
-                                                    {{session()->forget('errMessage')}}
-                                                </div>
-                                            @endif
                                             <div class="card-body">
                                                 @csrf
                                                 <div class="form-group">
