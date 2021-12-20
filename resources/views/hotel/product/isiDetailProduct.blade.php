@@ -1,6 +1,6 @@
 <div class="card-body">
     <center>
-        <img name="gmbr" src="{{asset("/hotel_images".$kamar->gambar_kamar)}}" alt="" /><br>
+        <img style="width: 25%; height: 25%" src="{{Storage::disk('local')->url('kamar_images/'.$kamar->gambar_kamar)}}" alt="" />                            <div class="card-body">
         <input type="hidden" name="gambar_awal" value="{{$kamar->gambar_kamar}}">
         @if ($mode_edit)
             <input type="file" name="imgfile" id="imgfile">
